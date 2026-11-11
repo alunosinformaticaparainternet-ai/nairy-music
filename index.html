@@ -1,0 +1,1414 @@
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>NAIRY MUSIC</title>
+
+        <meta
+            name="description"
+            content="NAIRY MUSIC - uma experiência interativa para descobrir, ouvir e conhecer música."
+        >
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+            rel="stylesheet"
+        >
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        >
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+
+        <!-- ==========================================
+            FUNDO / EFEITOS
+        =========================================== -->
+
+        <div class="background-effects">
+            <div class="glow glow-one"></div>
+            <div class="glow glow-two"></div>
+            <div class="glow glow-three"></div>
+        </div>
+
+        <!-- ==========================================
+            HEADER
+        =========================================== -->
+
+        <header class="header">
+
+            <div class="logo-area">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <a href="#home" class="logo">
+                    <span class="logo-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </span>
+
+                    <span>NAIRY</span>
+                </a>
+            </div>
+
+            <nav class="main-nav" id="mainNav">
+
+                <a href="#home" class="nav-link active" data-section="home">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
+
+                <a href="#music" class="nav-link" data-section="music">
+                    <i class="fa-solid fa-music"></i>
+                    Music
+                </a>
+
+                <a href="#discover" class="nav-link" data-section="discover">
+                    <i class="fa-solid fa-compass"></i>
+                    Descobrir
+                </a>
+
+                <a href="jogos.html" class="nav-link" data-section="games">
+                    <i class="fa-solid fa-gamepad"></i>
+                    Jogos
+                </a>
+
+                <a href="#about" class="nav-link" data-section="about">
+                    <i class="fa-solid fa-user"></i>
+                    About Me
+                </a>
+
+                <a href="#contact" class="nav-link" data-section="contact">
+                    <i class="fa-solid fa-envelope"></i>
+                    Contact
+                </a>
+
+            </nav>
+
+            <div class="header-actions">
+
+                <button class="icon-button" id="themeBtn" title="Alterar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <button class="icon-button" id="favoritesBtn" title="Favoritos">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button class="profile-button" id="profileBtn">
+                    <span class="profile-avatar">N</span>
+                    <span class="profile-name">Nairy</span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==========================================
+            MENU MOBILE
+        =========================================== -->
+
+        <div class="mobile-menu" id="mobileMenu">
+
+            <div class="mobile-menu-header">
+
+                <span class="logo">
+                    <span class="logo-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </span>
+
+                    NAIRY
+                </span>
+
+                <button id="closeMobileMenu">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+            <a href="#home" class="mobile-link">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </a>
+
+            <a href="#music" class="mobile-link">
+                <i class="fa-solid fa-music"></i>
+                Music
+            </a>
+
+            <a href="#discover" class="mobile-link">
+                <i class="fa-solid fa-compass"></i>
+                Descobrir
+            </a>
+
+            <a href="jogos.html" class="mobile-link">
+                <i class="fa-solid fa-gamepad"></i>
+                Jogos
+            </a>
+
+            <a href="#about" class="mobile-link">
+                <i class="fa-solid fa-user"></i>
+                About Me
+            </a>
+
+            <a href="#contact" class="mobile-link">
+                <i class="fa-solid fa-envelope"></i>
+                Contact
+            </a>
+
+        </div>
+
+
+        <!-- ==========================================
+            CONTEÚDO PRINCIPAL
+        =========================================== -->
+
+        <main>
+
+            <!-- ======================================
+                HOME
+            ======================================= -->
+
+            <section id="home" class="section hero-section">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+                        <span class="pulse"></span>
+                        SUA MÚSICA. SUA EXPERIÊNCIA.
+                    </div>
+
+                    <h1>
+                        Descubra uma nova
+                        <span>forma de ouvir música.</span>
+                    </h1>
+
+                    <p>
+                        Explore músicas, descubra novos artistas,
+                        monte suas playlists e participe de experiências
+                        interativas criadas para quem realmente ama música.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <button class="primary-button" id="startListeningBtn">
+                            <i class="fa-solid fa-play"></i>
+                            Começar a ouvir
+                        </button>
+
+                        <button class="secondary-button" id="discoverBtn">
+                            <i class="fa-solid fa-compass"></i>
+                            Explorar
+                        </button>
+
+                    </div>
+
+                    <div class="hero-stats">
+
+                        <div class="hero-stat">
+                            <strong id="heroSongs">128+</strong>
+                            <span>Músicas</span>
+                        </div>
+
+                        <div class="hero-stat">
+                            <strong>32</strong>
+                            <span>Artistas</span>
+                        </div>
+
+                        <div class="hero-stat">
+                            <strong>12</strong>
+                            <span>Gêneros</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DISCO MUSICAL -->
+
+                <div class="hero-player-card">
+
+                    <div class="album-glow"></div>
+
+                    <div class="album-cover large-cover" id="heroCover">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+
+                    <div class="hero-player-info">
+
+                        <span class="small-label">
+                            TOCANDO AGORA
+                        </span>
+
+                        <h3 id="heroSongTitle">
+                            Midnight Dreams
+                        </h3>
+
+                        <p id="heroArtist">
+                            Nairy Music
+                        </p>
+
+                    </div>
+
+                    <div class="hero-wave">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    <div class="hero-controls">
+
+                        <button id="heroPrev">
+                            <i class="fa-solid fa-backward-step"></i>
+                        </button>
+
+                        <button class="hero-play" id="heroPlay">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+
+                        <button id="heroNext">
+                            <i class="fa-solid fa-forward-step"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                MUSIC
+            ======================================= -->
+
+            <section id="music" class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-tag">MUSIC</span>
+
+                        <h2>
+                            Encontre sua
+                            <span>próxima música.</span>
+                        </h2>
+
+                        <p>
+                            Escolha uma música e comece sua experiência.
+                        </p>
+                    </div>
+
+                    <div class="search-container">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Pesquisar música ou artista..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORIAS -->
+
+                <div class="categories" id="categories">
+
+                    <button class="category active" data-category="Todos">
+                        Todos
+                    </button>
+
+                    <button class="category" data-category="Pop">
+                        Pop
+                    </button>
+
+                    <button class="category" data-category="Rock">
+                        Rock
+                    </button>
+
+                    <button class="category" data-category="Hip Hop">
+                        Hip Hop
+                    </button>
+
+                    <button class="category" data-category="Eletrônica">
+                        Eletrônica
+                    </button>
+
+                    <button class="category" data-category="MPB">
+                        MPB
+                    </button>
+
+                    <button class="category" data-category="R&B">
+                        R&B
+                    </button>
+
+                </div>
+
+
+                <!-- GRID DE MÚSICAS -->
+
+                <div class="music-grid" id="musicGrid"></div>
+
+            </section>
+
+
+            <!-- ======================================
+                PLAYER COMPLETO
+            ======================================= -->
+
+            <section class="full-player-section">
+
+                <div class="full-player">
+
+                    <div class="current-song">
+
+                        <div class="album-cover small-cover" id="playerCover">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+
+                        <div>
+
+                            <h4 id="playerTitle">
+                                Midnight Dreams
+                            </h4>
+
+                            <p id="playerArtist">
+                                Nairy Music
+                            </p>
+
+                        </div>
+
+                        <button class="heart-player" id="playerFavorite">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="player-main">
+
+                        <div class="player-buttons">
+
+                            <button id="shuffleBtn" title="Aleatório">
+                                <i class="fa-solid fa-shuffle"></i>
+                            </button>
+
+                            <button id="prevBtn" title="Anterior">
+                                <i class="fa-solid fa-backward-step"></i>
+                            </button>
+
+                            <button class="main-play" id="playBtn" title="Play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+
+                            <button id="nextBtn" title="Próxima">
+                                <i class="fa-solid fa-forward-step"></i>
+                            </button>
+
+                            <button id="repeatBtn" title="Repetir">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="progress-area">
+
+                            <span id="currentTime">
+                                0:00
+                            </span>
+
+                            <input
+                                type="range"
+                                id="progressBar"
+                                min="0"
+                                max="100"
+                                value="0"
+                            >
+
+                            <span id="duration">
+                                0:00
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="volume-control">
+
+                        <i class="fa-solid fa-volume-low"></i>
+
+                        <input
+                            type="range"
+                            id="volumeBar"
+                            min="0"
+                            max="100"
+                            value="70"
+                        >
+
+                        <i class="fa-solid fa-volume-high"></i>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                DESCOBRIR
+            ======================================= -->
+
+            <section id="discover" class="section discover-section">
+
+                <div class="section-header centered">
+
+                    <span class="section-tag">
+                        DESCUBRA
+                    </span>
+
+                    <h2>
+                        Qual é o seu
+                        <span>clima musical?</span>
+                    </h2>
+
+                    <p>
+                        Escolha uma opção e deixe o aplicativo
+                        encontrar músicas que combinam com você.
+                    </p>
+
+                </div>
+
+
+                <div class="mood-grid">
+
+                    <button class="mood-card" data-mood="Relaxar">
+
+                        <div class="mood-icon">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+
+                        <h3>Relaxar</h3>
+
+                        <p>
+                            Sons tranquilos para desacelerar.
+                        </p>
+
+                    </button>
+
+
+                    <button class="mood-card" data-mood="Festa">
+
+                        <div class="mood-icon">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                        </div>
+
+                        <h3>Festa</h3>
+
+                        <p>
+                            Batidas para deixar o ambiente animado.
+                        </p>
+
+                    </button>
+
+
+                    <button class="mood-card" data-mood="Foco">
+
+                        <div class="mood-icon">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+
+                        <h3>Foco</h3>
+
+                        <p>
+                            Música para estudar e produzir.
+                        </p>
+
+                    </button>
+
+
+                    <button class="mood-card" data-mood="Energia">
+
+                        <div class="mood-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+
+                        <h3>Energia</h3>
+
+                        <p>
+                            Aumente o ritmo e aproveite.
+                        </p>
+
+                    </button>
+
+                </div>
+
+
+                <div class="recommendation-box" id="recommendationBox">
+
+                    <div class="recommendation-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            RECOMENDAÇÃO
+                        </span>
+
+                        <h3 id="recommendationTitle">
+                            Escolha um clima acima
+                        </h3>
+
+                        <p id="recommendationText">
+                            Vamos encontrar uma música especialmente
+                            para o seu momento.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="primary-button small"
+                        id="recommendationPlay"
+                    >
+                        Ouvir
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                JOGOS
+            ======================================= -->
+
+            <section id="games" class="section games-section">
+
+                <div class="section-header centered">
+
+                    <span class="section-tag">
+                        INTERATIVO
+                    </span>
+
+                    <h2>
+                        Música também
+                        <span>pode ser diversão.</span>
+                    </h2>
+
+                    <p>
+                        Teste seus conhecimentos musicais.
+                    </p>
+
+                </div>
+
+
+                <div class="game-container">
+
+                    <div class="game-header">
+
+                        <div>
+                            <span>
+                                QUIZ MUSICAL
+                            </span>
+
+                            <h3>
+                                Você realmente conhece música?
+                            </h3>
+                        </div>
+
+                        <div class="game-score">
+                            <span>PONTOS</span>
+                            <strong id="score">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div id="quizContent">
+
+                        <div class="quiz-progress">
+
+                            <div class="quiz-progress-bar">
+                                <span id="quizProgress"></span>
+                            </div>
+
+                            <span id="questionNumber">
+                                1 / 8
+                            </span>
+
+                        </div>
+
+
+                        <div class="question-area">
+
+                            <span class="question-category">
+                                DESAFIO
+                            </span>
+
+                            <h3 id="question">
+                                Qual instrumento possui teclas
+                                brancas e pretas?
+                            </h3>
+
+                        </div>
+
+
+                        <div class="answers" id="answers">
+
+                            <button class="answer">
+                                Violão
+                            </button>
+
+                            <button class="answer">
+                                Piano
+                            </button>
+
+                            <button class="answer">
+                                Bateria
+                            </button>
+
+                            <button class="answer">
+                                Flauta
+                            </button>
+
+                        </div>
+
+                        <button
+                            class="primary-button next-question"
+                            id="nextQuestion"
+                            disabled
+                        >
+                            Próxima pergunta
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="quiz-result hidden"
+                        id="quizResult"
+                    >
+
+                        <div class="result-icon">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+
+                        <span>
+                            RESULTADO
+                        </span>
+
+                        <h3>
+                            Quiz concluído!
+                        </h3>
+
+                        <p id="resultMessage">
+                            Você terminou o desafio.
+                        </p>
+
+                        <strong id="finalScore">
+                            0 pontos
+                        </strong>
+
+                        <button
+                            class="primary-button"
+                            id="restartQuiz"
+                        >
+                            Jogar novamente
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                PLAYLISTS
+            ======================================= -->
+
+            <section class="section playlists-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-tag">
+                            SUAS PLAYLISTS
+                        </span>
+
+                        <h2>
+                            Sua música,
+                            <span>do seu jeito.</span>
+                        </h2>
+
+                    </div>
+
+                    <button
+                        class="secondary-button"
+                        id="createPlaylistBtn"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Nova playlist
+                    </button>
+
+                </div>
+
+
+                <div class="playlist-grid" id="playlistGrid">
+
+                    <div class="playlist-card">
+
+                        <div class="playlist-cover gradient-one">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+
+                        <div class="playlist-info">
+
+                            <h3>
+                                Minhas Favoritas
+                            </h3>
+
+                            <p>
+                                <span id="favoriteCount">
+                                    0
+                                </span>
+                                músicas
+                            </p>
+
+                        </div>
+
+                        <button class="playlist-play">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="playlist-card">
+
+                        <div class="playlist-cover gradient-two">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+
+                        <div class="playlist-info">
+
+                            <h3>
+                                Energia
+                            </h3>
+
+                            <p>
+                                Para começar o dia
+                            </p>
+
+                        </div>
+
+                        <button class="playlist-play">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="playlist-card">
+
+                        <div class="playlist-cover gradient-three">
+                            <i class="fa-solid fa-cloud-moon"></i>
+                        </div>
+
+                        <div class="playlist-info">
+
+                            <h3>
+                                Night Vibes
+                            </h3>
+
+                            <p>
+                                Sons para a noite
+                            </p>
+
+                        </div>
+
+                        <button class="playlist-play">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                SOBRE
+            ======================================= -->
+
+            <section id="about" class="section about-section">
+
+                <div class="about-image">
+
+                    <div class="about-disc">
+
+                        <div class="disc-center">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="about-decoration decoration-one"></div>
+                    <div class="about-decoration decoration-two"></div>
+
+                </div>
+
+
+                <div class="about-content">
+
+                    <span class="section-tag">
+                        ABOUT ME
+                    </span>
+
+                    <h2>
+                        Mais do que um
+                        <span>site de música.</span>
+                    </h2>
+
+                    <p>
+                        O NAIRY MUSIC foi pensado para transformar
+                        o simples ato de ouvir música em uma experiência
+                        mais interativa, visual e divertida.
+                    </p>
+
+                    <p>
+                        Aqui você pode descobrir músicas, testar seus
+                        conhecimentos, criar playlists e encontrar
+                        conteúdos de acordo com seu momento.
+                    </p>
+
+
+                    <div class="about-features">
+
+                        <div>
+                            <i class="fa-solid fa-headphones"></i>
+                            <span>
+                                Experiência musical
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-gamepad"></i>
+                            <span>
+                                Conteúdo interativo
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            <span>
+                                Design responsivo
+                            </span>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>
+                                Descobertas personalizadas
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                ESTATÍSTICAS
+            ======================================= -->
+
+            <section class="stats-section">
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-music"></i>
+
+                    <strong id="statSongs">
+                        128
+                    </strong>
+
+                    <span>
+                        Músicas disponíveis
+                    </span>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    <strong id="statFavorites">
+                        0
+                    </strong>
+
+                    <span>
+                        Favoritos
+                    </span>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-gamepad"></i>
+
+                    <strong id="statGames">
+                        0
+                    </strong>
+
+                    <span>
+                        Partidas jogadas
+                    </span>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    <strong id="statMinutes">
+                        0
+                    </strong>
+
+                    <span>
+                        Minutos ouvidos
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                CONTATO
+            ======================================= -->
+
+            <section id="contact" class="section contact-section">
+
+                <div class="contact-content">
+
+                    <span class="section-tag">
+                        CONTACT
+                    </span>
+
+                    <h2>
+                        Vamos conversar
+                        <span>sobre música?</span>
+                    </h2>
+
+                    <p>
+                        Envie uma mensagem para compartilhar uma ideia,
+                        sugestão ou simplesmente falar sobre música.
+                    </p>
+
+
+                    <div class="contact-information">
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+
+                            <div>
+                                <span>Email</span>
+                                <strong>
+                                    contato@nairymusic.com
+                                </strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+
+                            <div>
+                                <span>Localização</span>
+                                <strong>
+                                    Brasil
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <form class="contact-form" id="contactForm">
+
+                    <div class="form-group">
+
+                        <label for="contactName">
+                            Nome
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contactName"
+                            placeholder="Seu nome"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="contactEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="contactEmail"
+                            placeholder="seu@email.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="contactMessage">
+                            Mensagem
+                        </label>
+
+                        <textarea
+                            id="contactMessage"
+                            rows="5"
+                            placeholder="Digite sua mensagem..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Enviar mensagem
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+
+                </form>
+
+            </section>
+
+        </main>
+
+
+        <!-- ==========================================
+            FOOTER
+        =========================================== -->
+
+        <footer class="footer">
+
+            <div class="footer-main">
+
+                <div class="footer-brand">
+
+                    <a href="#home" class="logo">
+
+                        <span class="logo-icon">
+                            <i class="fa-solid fa-headphones"></i>
+                        </span>
+
+                        NAIRY
+
+                    </a>
+
+                    <p>
+                        Música, descoberta e interação
+                        em um só lugar.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <h4>
+                        Navegação
+                    </h4>
+
+                    <a href="#home">Home</a>
+                    <a href="#music">Music</a>
+                    <a href="#discover">Descobrir</a>
+                    <a href="jogos.html">Jogos</a>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <h4>
+                        Projeto
+                    </h4>
+
+                    <a href="#about">Sobre</a>
+                    <a href="#contact">Contato</a>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos</a>
+
+                </div>
+
+
+                <div class="footer-social">
+
+                    <h4>
+                        Redes sociais
+                    </h4>
+
+                    <div>
+
+                        <a href="#" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+
+                        <a href="#" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+
+                        <a href="#" title="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+
+                        <a href="#" title="Spotify">
+                            <i class="fa-brands fa-spotify"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 NAIRY MUSIC.
+                    Todos os direitos reservados.
+                </span>
+
+                <span>
+                    Feito para quem ama música.
+                </span>
+
+            </div>
+
+        </footer>
+
+
+        <!-- ==========================================
+            MODAL PERFIL
+        =========================================== -->
+
+        <div class="modal" id="profileModal">
+
+            <div class="modal-content">
+
+                <button class="modal-close" data-close="profileModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="modal-avatar">
+                    N
+                </div>
+
+                <h2>
+                    Nairy
+                </h2>
+
+                <p>
+                    Explorador musical
+                </p>
+
+                <div class="profile-stat-grid">
+
+                    <div>
+                        <strong id="modalFavorites">
+                            0
+                        </strong>
+                        <span>Favoritos</span>
+                    </div>
+
+                    <div>
+                        <strong id="modalGames">
+                            0
+                        </strong>
+                        <span>Jogos</span>
+                    </div>
+
+                    <div>
+                        <strong id="modalMinutes">
+                            0
+                        </strong>
+                        <span>Minutos</span>
+                    </div>
+
+                </div>
+
+                <button
+                    class="primary-button"
+                    data-close="profileModal"
+                >
+                    Fechar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+            MODAL FAVORITOS
+        =========================================== -->
+
+        <div class="modal" id="favoritesModal">
+
+            <div class="modal-content favorites-modal">
+
+                <button class="modal-close" data-close="favoritesModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <span class="section-tag">
+                    SUA COLEÇÃO
+                </span>
+
+                <h2>
+                    Músicas favoritas
+                </h2>
+
+                <div
+                    class="favorites-list"
+                    id="favoritesList"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+            MODAL NOVA PLAYLIST
+        =========================================== -->
+
+        <div class="modal" id="playlistModal">
+
+            <div class="modal-content">
+
+                <button class="modal-close" data-close="playlistModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <span class="section-tag">
+                    NOVA PLAYLIST
+                </span>
+
+                <h2>
+                    Criar playlist
+                </h2>
+
+                <div class="form-group">
+
+                    <label for="playlistName">
+                        Nome da playlist
+                    </label>
+
+                    <input
+                        type="text"
+                        id="playlistName"
+                        placeholder="Ex: Minhas músicas"
+                    >
+
+                </div>
+
+                <button
+                    class="primary-button"
+                    id="savePlaylistBtn"
+                >
+                    Criar playlist
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+            TOAST
+        =========================================== -->
+
+        <div class="toast" id="toast">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span id="toastMessage">
+                Ação realizada!
+            </span>
+
+        </div>
+
+
+        <!-- ==========================================
+            AUDIO
+        =========================================== -->
+
+        <audio id="audioPlayer"></audio>
+
+
+        <script src="script.js"></script>
+
+    </body>
+
+    </html>
+    ```

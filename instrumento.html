@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz de Instrumentos Musicais | NAIRY MUSIC</title>
+
+    <meta
+        name="description"
+        content="Teste seus conhecimentos sobre as características dos instrumentos musicais no desafio da NAIRY MUSIC."
+    >
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS Unificado com o Padrão Visual -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0b0714;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+        }
+
+        .glow-one { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #8b5cf6; }
+        .glow-two { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #6366f1; }
+        .glow-three { top: 40%; left: 30%; width: 40vw; height: 40vw; background: #a855f7; }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 5%;
+            background: rgba(11, 7, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 1rem; }
+        .logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            text-decoration: none; color: #ffffff; font-weight: 800; font-size: 1.2rem;
+        }
+        .logo-icon {
+            width: 35px; height: 35px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 1rem; }
+        .icon-button {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            text-decoration: none;
+        }
+
+        .section { padding: 4rem 5%; max-width: 900px; margin: 0 auto; }
+        
+        .card-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff; border: none; padding: 0.9rem 2rem;
+            border-radius: 12px; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .primary-button:hover { transform: translateY(-2px); }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; padding: 0.9rem 2rem; border-radius: 12px;
+            font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .name-input-group {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .name-input-group input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            outline: none;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Estilo do Jogo */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1rem;
+            text-align: left;
+        }
+
+        .quiz-progress-bar {
+            width: 100%; height: 6px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px; margin-bottom: 1.5rem; overflow: hidden;
+        }
+        .quiz-progress-fill {
+            height: 100%; background: #8b5cf6; width: 0%; transition: width 0.3s ease;
+        }
+
+        .question-card {
+            margin: 1.5rem 0;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 1.8rem;
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            color: #ffffff;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media(max-width: 650px) {
+            .answers-grid { grid-template-columns: 1fr; }
+        }
+
+        .answer-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+        }
+
+        .answer-btn.correct {
+            background: rgba(34, 197, 94, 0.2) !important;
+            border-color: #22c55e !important;
+            color: #4ade80;
+        }
+
+        .answer-btn.wrong {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #f87171;
+        }
+
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            min-height: 1.5rem;
+            text-align: left;
+        }
+
+        .next-btn-container {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-stats strong {
+            display: block; font-size: 1.4rem; color: #a855f7;
+        }
+        .result-stats span { font-size: 0.8rem; color: #a1a1aa; }
+
+        .footer {
+            background: #07040d; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 5% 1.5rem; margin-top: 4rem; text-align: center; color: #71717a; font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-effects">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo-area">
+            <a href="jogos.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-headphones"></i></span>
+                <span>NAIRY MUSIC</span>
+            </a>
+        </div>
+        <div class="header-actions">
+            <a href="jogos.html" class="icon-button" title="Voltar aos Jogos"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    </header>
+
+    <main class="section">
+
+        <!-- TELA 1: DIGITAR APENAS O NOME -->
+        <div class="card-box" id="nameScreen">
+            <div style="font-size: 2.5rem; color: #a855f7; margin-bottom: 1rem;">
+                <i class="fa-solid fa-guitar"></i>
+            </div>
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 0.5rem;">Quiz de Instrumentos</h1>
+            <p style="color: #a1a1aa; margin-bottom: 1.5rem;">Responda às características e descubra qual é o instrumento musical. A cada acerto, os pontos aumentam de 100 até 1.000!</p>
+            
+            <div class="name-input-group">
+                <label for="playerName" style="font-size: 0.9rem; color: #d4d4d8;">Digite seu nome para jogar:</label>
+                <input type="text" id="playerName" placeholder="Seu nome..." autocomplete="off">
+            </div>
+
+            <button class="primary-button" onclick="initGame()">
+                <i class="fa-solid fa-play"></i> Começar Desafio
+            </button>
+        </div>
+
+        <!-- TELA 2: ÁREA DO JOGO -->
+        <div class="card-box hidden" id="gameScreen">
+            <div class="quiz-header">
+                <div>
+                    <span id="currentQuestionLabel" style="font-size: 0.75rem; font-weight: 700; color: #a855f7; letter-spacing: 1px;">PERGUNTA 1 DE 10</span>
+                    <h3 style="font-size: 1.2rem; margin-top: 0.3rem;">Desafio de Características</h3>
+                </div>
+                <div style="text-align: right;">
+                    <span id="pointsValueLabel" style="font-size: 0.75rem; color: #eab308; font-weight: bold; display: block;">VALOR: 100 PTS</span>
+                    <strong id="liveScore" style="font-size: 1.3rem; color: #ffffff;">0 pts acumulados</strong>
+                </div>
+            </div>
+
+            <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" id="progressBar"></div>
+            </div>
+
+            <!-- CAIXA DE CARACTERÍSTICAS DA PERGUNTA -->
+            <div class="question-card">
+                <p style="font-size: 0.8rem; color: #a855f7; margin-bottom: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fa-solid fa-circle-question"></i> Qual é o instrumento?
+                </p>
+                <p class="question-text" id="questionText">Carregando pergunta...</p>
+            </div>
+
+            <!-- OPÇÕES DE RESPOSTA -->
+            <div class="answers-grid" id="answersGrid"></div>
+
+            <div class="quiz-feedback" id="quizFeedback"></div>
+
+            <div class="next-btn-container">
+                <button class="primary-button hidden" id="nextBtn" onclick="nextQuestion()">
+                    Próxima Pergunta <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 3: RESULTADO FINAL -->
+        <div class="card-box hidden" id="resultScreen">
+            <div style="font-size: 3rem; color: #eab308; margin-bottom: 0.8rem;">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: #a855f7; letter-spacing: 1px;">FIM DO DESAFIO</span>
+            <h2 id="resultTitle" style="font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0.5rem 0;">Parabéns!</h2>
+            <p id="resultSubtitle" style="color: #a1a1aa; margin-bottom: 1.5rem;"></p>
+            
+            <div style="font-size: 2.2rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;" id="finalScoreDisplay">0 pts</div>
+
+            <div class="result-stats">
+                <div>
+                    <strong id="statCorrect">0</strong>
+                    <span>Acertos</span>
+                </div>
+                <div>
+                    <strong id="statWrong">0</strong>
+                    <span>Erros</span>
+                </div>
+                <div>
+                    <strong id="statPercentage">0%</strong>
+                    <span>Aproveitamento</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <button class="secondary-button" onclick="location.reload()">
+                    <i class="fa-solid fa-rotate-right"></i> Jogar de Novo
+                </button>
+                <a href="jogos.html" class="primary-button">
+                    <i class="fa-solid fa-gamepad"></i> Central de Jogos
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 NAIRY MUSIC. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DE FUNCIONAMENTO DO JOGO -->
+    <script>
+        // 10 perguntas baseadas em características, evoluindo de 100 até 1000 pontos
+        const gameData = [
+            {
+                text: "Possui teclas brancas e pretas, martelos internos que batem em cordas esticadas e é considerado um dos instrumentos de base mais completos da harmonia.",
+                options: ["Violão", "Piano", "Violino", "Harpa"],
+                correct: 1,
+                points: 100
+            },
+            {
+                text: "Instrumento de cordas amplificado eletronicamente, possui trastes no braço e é indispensável em bandas de rock e pop para solos e bases marcantes.",
+                options: ["Guitarra Elétrica", "Contrabaixo acústico", "Ukulele", "Bandolim"],
+                correct: 0,
+                points: 200
+            },
+            {
+                text: "Formado por tambores e pratos variados, é tocado utilizando baquetas e pedais, sendo o coração rítmico principal das baterias de bandas modernas.",
+                options: ["Bateria", "Congas", "Xilofone", "Pandeiro"],
+                correct: 0,
+                points: 300
+            },
+            {
+                text: "Instrumento de sopro feito originalmente de metal, possui chaves que controlam aberturas e é extremamente popular no jazz e em baladas suaves.",
+                options: ["Flauta Transversal", "Saxofone", "Trompete", "Clarinete"],
+                correct: 1,
+                points: 400
+            },
+            {
+                text: "Instrumento de sopro de metal brilhante, possui pistões/valvulas acionados pelos dedos e emite um som potente, agudo e festivo.",
+                options: ["Saxofone", "Trombone", "Trompete", "Tuba"],
+                correct: 2,
+                points: 500
+            },
+            {
+                text: "Semelhante ao violino mas um pouco maior e mais grave, é tocado sentado apoiado ao corpo com um arco de crina de cavalo.",
+                options: ["Violoncelo", "Violino", "Contrabaixo acústico", "Viola"],
+                correct: 0,
+                points: 600
+            },
+            {
+                text: "Possui um fole central que é aberto e fechado para bombear ar, botões de um lado e teclas de piano do outro, muito tradicional no forró e sertanejo.",
+                options: ["Sanfona / Acordeon", "Teclado", "Órgão", "Gaita de fole"],
+                correct: 0,
+                points: 700
+            },
+            {
+                text: "Pequeno instrumento de quatro cordas originado no Havaí, muito associado a melodias leves, praianas e alegres.",
+                options: ["Ukulele", "Violão", "Bandolim", "Cavaquinho"],
+                correct: 0,
+                points: 800
+            },
+            {
+                text: "Instrumento de percussão latino-americano composto por um cilindro oco de metal com ranhuras, tocado raspando-se uma baqueta metálica sobre ele.",
+                options: ["Bateria", "Reco-reco", "Pandeiro", "Surdo"],
+                correct: 1,
+                points: 900
+            },
+            {
+                text: "Conhecido como o 'rei dos instrumentos', possui tubos gigantescos por onde passa ar pressurizado, sendo muito comum em catedrais e igrejas históricas.",
+                options: ["Órgão de tubos", "Clarinete", "Gaita de boca", "Trombone"],
+                correct: 0,
+                points: 1000
+            }
+        ];
+
+        let currentStep = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let playerName = "";
+
+        const nameScreen = document.getElementById("nameScreen");
+        const gameScreen = document.getElementById("gameScreen");
+        const resultScreen = document.getElementById("resultScreen");
+        
+        const playerNameInput = document.getElementById("playerName");
+        const questionText = document.getElementById("questionText");
+        const answersGrid = document.getElementById("answersGrid");
+        const quizFeedback = document.getElementById("quizFeedback");
+        const nextBtn = document.getElementById("nextBtn");
+        const liveScore = document.getElementById("liveScore");
+        const pointsValueLabel = document.getElementById("pointsValueLabel");
+        const currentQuestionLabel = document.getElementById("currentQuestionLabel");
+        const progressBar = document.getElementById("progressBar");
+
+        function initGame() {
+            playerName = playerNameInput.value.trim();
+            if (!playerName) {
+                alert("Por favor, digite seu nome para continuar!");
+                return;
+            }
+
+            nameScreen.classList.add("hidden");
+            gameScreen.classList.remove("hidden");
+            loadRound();
+        }
+
+        function loadRound() {
+            quizFeedback.innerHTML = "";
+            nextBtn.classList.add("hidden");
+
+            const currentObj = gameData[currentStep];
+            currentQuestionLabel.textContent = `PERGUNTA ${currentStep + 1} DE ${gameData.length}`;
+            pointsValueLabel.textContent = `VALOR DESTA PERGUNTA: ${currentObj.points} PTS`;
+            questionText.textContent = currentObj.text;
+
+            const progressPercent = (currentStep / gameData.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            answersGrid.innerHTML = "";
+            currentObj.options.forEach((instrumentName, index) => {
+                const btn = document.createElement("button");
+                btn.className = "answer-btn";
+                btn.innerHTML = `<span>${instrumentName}</span> <i class="fa-regular fa-circle"></i>`;
+                btn.onclick = () => selectAnswer(index, btn);
+                answersGrid.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(selectedIndex, selectedBtn) {
+            const allButtons = answersGrid.querySelectorAll(".answer-btn");
+            allButtons.forEach(b => b.disabled = true);
+
+            const currentObj = gameData[currentStep];
+            const isCorrect = (selectedIndex === currentObj.correct);
+
+            if (isCorrect) {
+                selectedBtn.classList.add("correct");
+                selectedBtn.querySelector("i").className = "fa-solid fa-circle-check";
+                score += currentObj.points;
+                correctCount++;
+                quizFeedback.innerHTML = `<span style="color: #4ade80;"><i class="fa-solid fa-check"></i> Acertou! +${currentObj.points} pontos</span>`;
+            } else {
+                selectedBtn.classList.add("wrong");
+                selectedBtn.querySelector("i").className = "fa-solid fa-circle-xmark";
+                allButtons[currentObj.correct].classList.add("correct");
+                wrongCount++;
+                quizFeedback.innerHTML = `<span style="color: #f87171;"><i class="fa-solid fa-xmark"></i> Errou! A resposta correta era: <b>${currentObj.options[currentObj.correct]}</b></span>`;
+            }
+
+            liveScore.textContent = `${score} pts acumulados`;
+            nextBtn.classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentStep++;
+            if (currentStep < gameData.length) {
+                loadRound();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            gameScreen.classList.add("hidden");
+            resultScreen.classList.remove("hidden");
+
+            document.getElementById("resultTitle").textContent = `Parabéns, ${playerName}!`;
+            document.getElementById("resultSubtitle").textContent = `Você completou o quiz de características de instrumentos.`;
+            document.getElementById("finalScoreDisplay").textContent = `${score} pontos`;
+            
+            document.getElementById("statCorrect").textContent = correctCount;
+            document.getElementById("statWrong").textContent = wrongCount;
+            
+            const percentage = Math.round((correctCount / gameData.length) * 100);
+            document.getElementById("statPercentage").textContent = `${percentage}%`;
+
+            let totalPoints = Number(localStorage.getItem("nairy_total_points")) || 0;
+            let gamesPlayed = Number(localStorage.getItem("nairy_games_played")) || 0;
+            
+            totalPoints += score;
+            gamesPlayed += 1;
+
+            localStorage.setItem("nairy_total_points", totalPoints);
+            localStorage.setItem("nairy_games_played", gamesPlayed);
+        }
+    </script>
+</body>
+</html>

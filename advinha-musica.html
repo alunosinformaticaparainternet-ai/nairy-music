@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NAIRY MUSIC - Adivinhe a Música</title>
+
+    <meta name="description"
+        content="NAIRY MUSIC - Desafio interativo de adivinhar músicas através de trechos de letras, áudio e alternativas.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        :root {
+            --bg-primary: #0a0b10;
+            --bg-secondary: #12141c;
+            --bg-card: rgba(25, 28, 38, 0.85);
+
+            --border-color: rgba(255, 255, 255, 0.08);
+
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.4);
+            --accent-secondary: #ec4899;
+
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+
+            --success: #10b981;
+            --error: #ef4444;
+
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            pointer-events: none;
+            z-index: -1;
+
+            overflow: hidden;
+        }
+
+        .glow {
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            opacity: 0.15;
+        }
+
+        .glow-one {
+            top: -10%;
+            left: -10%;
+
+            width: 50vw;
+            height: 50vw;
+
+            background: var(--accent);
+        }
+
+        .glow-two {
+            bottom: -10%;
+            right: -10%;
+
+            width: 50vw;
+            height: 50vw;
+
+            background: var(--accent-secondary);
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 1.5rem 5%;
+
+            background: rgba(18, 20, 28, 0.8);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 0.75rem;
+
+            text-decoration: none;
+
+            color: var(--text-main);
+
+            font-weight: 700;
+
+            font-size: 1.25rem;
+
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(
+                135deg,
+                var(--accent),
+                var(--accent-secondary)
+            );
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: white;
+        }
+
+        /* MAIN */
+
+        main {
+            flex: 1;
+
+            max-width: 800px;
+
+            width: 90%;
+
+            margin: 2.5rem auto;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+        }
+
+        .section-tag {
+            background: rgba(139, 92, 246, 0.1);
+
+            color: var(--accent);
+
+            padding: 0.35rem 1rem;
+
+            border-radius: 50px;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        h2 {
+            font-size: 2.25rem;
+
+            margin-top: 0.75rem;
+
+            font-family: 'Playfair Display', serif;
+        }
+
+        h2 span {
+            background: linear-gradient(
+                135deg,
+                var(--accent),
+                var(--accent-secondary)
+            );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* CARD */
+
+        .game-card {
+            background: var(--bg-card);
+
+            border: 1px solid var(--border-color);
+
+            backdrop-filter: blur(16px);
+
+            border-radius: 20px;
+
+            padding: 2.5rem;
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-header-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 2rem;
+
+            border-bottom: 1px solid var(--border-color);
+
+            padding-bottom: 1rem;
+        }
+
+        .score-box strong {
+            color: var(--accent);
+
+            font-size: 1.5rem;
+        }
+
+        /* LETRA */
+
+        .lyric-challenge-box {
+            background: rgba(18, 20, 28, 0.95);
+
+            border: 2px solid var(--accent);
+
+            padding: 2rem;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            margin-bottom: 2rem;
+
+            box-shadow:
+                0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .lyric-text {
+            font-family: 'Playfair Display', serif;
+
+            font-size: 1.4rem;
+
+            font-style: italic;
+
+            color: #f3e8ff;
+
+            margin: 1rem 0;
+
+            line-height: 1.6;
+        }
+
+        /* AUDIO */
+
+        .audio-play-btn {
+            background: linear-gradient(
+                135deg,
+                var(--accent),
+                var(--accent-secondary)
+            );
+
+            color: white;
+
+            border: none;
+
+            padding: 0.75rem 1.5rem;
+
+            border-radius: 50px;
+
+            font-weight: 600;
+
+            font-size: 0.95rem;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 0.5rem;
+
+            margin-top: 0.5rem;
+
+            transition: var(--transition);
+
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .audio-play-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* DICAS */
+
+        .clues-container {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 1rem;
+
+            margin-bottom: 2rem;
+        }
+
+        .clue-box {
+            background: rgba(18, 20, 28, 0.9);
+
+            border: 1px dashed var(--border-color);
+
+            padding: 1rem 1.25rem;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            transition: var(--transition);
+        }
+
+        .clue-box.revealed {
+            border-style: solid;
+
+            border-color: var(--accent);
+
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .reveal-btn {
+            background: var(--accent);
+
+            color: white;
+
+            border: none;
+
+            padding: 0.5rem 1rem;
+
+            border-radius: 8px;
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .reveal-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ALTERNATIVAS */
+
+        .options-title {
+            font-size: 0.9rem;
+
+            color: var(--text-muted);
+
+            margin-bottom: 0.75rem;
+
+            font-weight: 600;
+        }
+
+        .options-container {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 0.8rem;
+
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            background: rgba(18, 20, 28, 0.95);
+
+            border: 1px solid var(--border-color);
+
+            color: var(--text-main);
+
+            padding: 1rem;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            font-size: 0.95rem;
+
+            transition: var(--transition);
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent);
+
+            background: rgba(139, 92, 246, 0.1);
+
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            border-color: var(--success);
+
+            background: rgba(16, 185, 129, 0.15);
+
+            color: #6ee7b7;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--error);
+
+            background: rgba(239, 68, 68, 0.12);
+
+            color: #fca5a5;
+        }
+
+        /* INPUT */
+
+        .guess-input-area {
+            display: flex;
+
+            gap: 1rem;
+        }
+
+        .guess-input-area input {
+            flex: 1;
+
+            background: var(--bg-secondary);
+
+            border: 1px solid var(--border-color);
+
+            padding: 1rem;
+
+            border-radius: 12px;
+
+            color: white;
+
+            font-size: 1rem;
+
+            outline: none;
+        }
+
+        .guess-input-area input:focus {
+            border-color: var(--accent);
+        }
+
+        .primary-btn {
+            background: linear-gradient(
+                135deg,
+                var(--accent),
+                var(--accent-secondary)
+            );
+
+            color: white;
+
+            border: none;
+
+            padding: 0 2rem;
+
+            border-radius: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* RESULTADO */
+
+        .result-screen {
+            text-align: center;
+
+            padding: 2rem 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 1rem;
+        }
+
+        .result-screen i {
+            font-size: 4rem;
+
+            color: #f59e0b;
+
+            margin-bottom: 0.5rem;
+        }
+
+        /* RESPONSIVO */
+
+        @media (max-width: 600px) {
+
+            .game-card {
+                padding: 1.5rem;
+            }
+
+            .game-header-info {
+                gap: 1rem;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+
+            .guess-input-area {
+                flex-direction: column;
+            }
+
+            .primary-btn {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="background-effects">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+</div>
+
+<header class="header">
+
+    <a href="#" class="logo">
+
+        <span class="logo-icon">
+            <i class="fa-solid fa-headphones"></i>
+        </span>
+
+        <span>NAIRY MUSIC</span>
+
+    </a>
+
+</header>
+
+<main>
+
+    <div class="section-header">
+
+        <span class="section-tag">
+            DESAFIO
+        </span>
+
+        <h2>
+            Adivinhe a <span>Música</span>
+        </h2>
+
+        <p>
+            Ouça o trecho, leia a letra, use as dicas ou escolha uma alternativa!
+        </p>
+
+    </div>
+
+    <div class="game-card" id="guessCard">
+
+        <div class="game-header-info">
+
+            <div>
+
+                <span style="font-size: 0.85rem; color: var(--text-muted);">
+                    RODADA
+                </span>
+
+                <h3 id="guessRoundTitle">
+                    Música 1 de 6
+                </h3>
+
+            </div>
+
+            <div class="score-box">
+
+                <span>
+                    PONTOS DA RODADA:
+                </span>
+
+                <strong id="guessRoundPoints">
+                    300 pts
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- LETRA -->
+
+        <div class="lyric-challenge-box">
+
+            <span style="
+                font-size: 0.75rem;
+                color: var(--accent);
+                letter-spacing: 2px;
+                font-weight: 700;
+            ">
+                TRECHO DA LETRA
+            </span>
+
+            <p class="lyric-text" id="lyricDisplay">
+                "Carregando trecho..."
+            </p>
+
+        </div>
+
+
+        <!-- DICAS -->
+
+        <div class="clues-container">
+
+            <div class="clue-box revealed">
+
+                <span>
+
+                    <strong>
+                        Dica 1:
+                    </strong>
+
+                    <span id="clue1Text">
+                        Carregando...
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <div class="clue-box" id="clue2Box">
+
+                <span>
+
+                    <strong>
+                        Dica 2:
+                    </strong>
+
+                    <span id="clue2Text">
+                        🔒 Revelar pista (-50 pts)
+                    </span>
+
+                </span>
+
+                <button class="reveal-btn"
+                    id="btnReveal2"
+                    onclick="revealClue(2)">
+
+                    Revelar
+
+                </button>
+
+            </div>
+
+
+            <div class="clue-box" id="clue3Box">
+
+                <span>
+
+                    <strong>
+                        Dica 3:
+                    </strong>
+
+                    <span id="clue3Text">
+                        🔒 Revelar artista (-100 pts)
+                    </span>
+
+                </span>
+
+                <button class="reveal-btn"
+                    id="btnReveal3"
+                    onclick="revealClue(3)">
+
+                    Revelar
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALTERNATIVAS -->
+
+        <div>
+
+            <div class="options-title">
+                <i class="fa-solid fa-list-check"></i>
+                Não sabe? Escolha uma alternativa:
+            </div>
+
+            <div class="options-container"
+                id="optionsContainer">
+            </div>
+
+        </div>
+
+
+        <!-- CAMPO DE RESPOSTA -->
+
+        <div class="guess-input-area">
+
+            <input
+                type="text"
+                id="guessInput"
+                placeholder="Digite o nome da música..."
+                onkeypress="checkEnterGuess(event)"
+            >
+
+            <button
+                class="primary-btn"
+                onclick="submitGuess()">
+
+                Adivinhar
+
+            </button>
+
+        </div>
+
+
+        <p id="guessFeedback"
+            style="
+                margin-top: 1rem;
+                font-weight: 600;
+                text-align: center;
+            ">
+        </p>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const guessSongs = [
+
+    {
+        title: "mágica",
+        display: "Mágica",
+
+        genre: "2010 • Forró",
+
+        emojis: "❤️ 🎶 💃",
+
+        lyric:
+            "marca... aonde vou te ver, quem sabe no mesmo lugar...",
+
+        artist:
+            "Calcinha Preta",
+
+        notes:
+            [330, 392, 440, 523]
+    },
+
+
+    {
+        title: "homem não chora",
+        display: "Homem Não Chora",
+
+        genre: "1983 • Pop",
+
+        emojis: "👟 🕴️ 💎",
+
+        lyric:
+            "você foi a culpada desse amor se acabar, você quem destruiu a minha vida...",
+
+        artist:
+            "Pablo",
+
+        notes:
+            [220, 247, 261, 293]
+    },
+
+
+    {
+        title: "infiel",
+        display: "Infiel",
+
+        genre: "2015 • Sertanejo",
+
+        emojis: "💔 🚪 😢",
+
+        lyric:
+            "estou te expulsando do meu coração, assume as consequências dessa traição...",
+
+        artist:
+            "Marília Mendonça",
+
+        notes:
+            [146, 196, 220, 233]
+    },
+
+
+    {
+        title: "tempo perdido",
+        display: "Tempo Perdido",
+
+        genre: "1986 • Rock Nacional",
+
+        emojis: "⏳ ❤️ 🎸",
+
+        lyric:
+            "então me abraça forte, me diz mais uma vez que já estamos distantes de tudo...",
+
+        artist:
+            "Legião Urbana",
+
+        notes:
+            [261, 329, 392, 523]
+    },
+
+
+    {
+        title: "nada é para sempre",
+        display: "Nada É Para Sempre",
+
+        genre: "2016 • Eletrônica",
+
+        emojis: "🎧 🌙 ❤️",
+
+        lyric:
+            "somos como areia e mar, somos como céu e lua, carne e unha...",
+
+        artist:
+            "Desejo de Menina",
+
+        notes:
+            [440, 523, 659, 880]
+    },
+
+
+    {
+        title: "evidências",
+        display: "Evidências",
+
+        genre: "1990 • Sertanejo",
+
+        emojis: "🎤 💔 ❤️",
+
+        lyric:
+            "E nessa loucura de dizer que não te quero, vou negando as aparências...",
+
+        artist:
+            "Chitãozinho & Xororó",
+
+        notes:
+            [392, 440, 493, 587]
+    }
+
+];
+
+
+let currentGuessIndex = 0;
+
+let roundPoints = 300;
+
+let audioCtx = null;
+
+// Guarda o HTML original do jogo para poder reiniciar
+const initialGameCardHTML =
+    document.getElementById('guessCard').innerHTML;
+
+/* ==========================================
+   ÁUDIO
+========================================== */
+
+function playSongSnippet() {
+
+    if (!audioCtx) {
+
+        audioCtx =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+
+    const currentSong =
+        guessSongs[currentGuessIndex];
+
+    const notes =
+        currentSong.notes || [440, 523, 659];
+
+
+    notes.forEach((freq, index) => {
+
+        const osc =
+            audioCtx.createOscillator();
+
+        const gain =
+            audioCtx.createGain();
+
+
+        osc.type = 'sine';
+
+        const startTime =
+            audioCtx.currentTime +
+            (index * 0.25);
+
+
+        osc.frequency.setValueAtTime(
+            freq,
+            startTime
+        );
+
+        gain.gain.setValueAtTime(
+            0.2,
+            startTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            startTime + 0.3
+        );
+
+
+        osc.connect(gain);
+
+        gain.connect(
+            audioCtx.destination
+        );
+
+
+        osc.start(startTime);
+
+        osc.stop(
+            startTime + 0.35
+        );
+
+    });
+
+}
+
+function restartGame() {
+
+    const card = document.getElementById('guessCard');
+
+    // Restaura toda a estrutura original do jogo
+    card.innerHTML = initialGameCardHTML;
+
+    // Volta para a primeira música
+    currentGuessIndex = 0;
+
+    // Restaura a pontuação
+    roundPoints = 300;
+
+    // Carrega novamente a primeira rodada
+    loadGuessRound();
+}
+
+/* ==========================================
+   INICIAR JOGO
+========================================== */
+
+function initGuessGame() {
+
+    currentGuessIndex = 0;
+
+    loadGuessRound();
+
+}
+
+
+/* ==========================================
+   CARREGAR RODADA
+========================================== */
+
+function loadGuessRound() {
+
+    if (
+        currentGuessIndex >=
+        guessSongs.length
+    ) {
+
+        document.getElementById('guessCard').innerHTML = `
+
+            <div class="result-screen">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <h3>
+                    Parabéns!
+                </h3>
+
+                <p>
+                    Você concluiu todas as músicas!
+                </p>
+
+            <button
+                class="primary-btn"
+                onclick="restartGame()"
+                style="
+                    padding: 1rem 2rem;
+                    margin-top: 1rem;
+                ">
+
+                <i class="fa-solid fa-rotate-right"></i>
+                Jogar Novamente
+
+            </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    roundPoints = 300;
+
+
+    const song =
+        guessSongs[currentGuessIndex];
+
+
+    document.getElementById(
+        'guessRoundTitle'
+    ).innerText =
+        `Música ${currentGuessIndex + 1} de ${guessSongs.length}`;
+
+
+    document.getElementById(
+        'guessRoundPoints'
+    ).innerText =
+        `${roundPoints} pts`;
+
+
+    document.getElementById(
+        'lyricDisplay'
+    ).innerText =
+        `"${song.lyric}"`;
+
+
+    document.getElementById(
+        'clue1Text'
+    ).innerText =
+        song.genre;
+
+
+    /* RESETAR DICAS */
+
+    document.getElementById(
+        'clue2Box'
+    ).className =
+        "clue-box";
+
+
+    document.getElementById(
+        'clue2Text'
+    ).innerText =
+        "🔒 Revelar pista (-50 pts)";
+
+
+    document.getElementById(
+        'btnReveal2'
+    ).style.display =
+        "inline-block";
+
+
+    document.getElementById(
+        'clue3Box'
+    ).className =
+        "clue-box";
+
+
+    document.getElementById(
+        'clue3Text'
+    ).innerText =
+        "🔒 Revelar artista (-100 pts)";
+
+
+    document.getElementById(
+        'btnReveal3'
+    ).style.display =
+        "inline-block";
+
+
+    /* RESETAR INPUT */
+
+    document.getElementById(
+        'guessInput'
+    ).value = "";
+
+
+    document.getElementById(
+        'guessFeedback'
+    ).innerText = "";
+
+
+    /* CRIAR ALTERNATIVAS */
+
+    createOptions();
+
+}
+
+
+/* ==========================================
+   CRIAR ALTERNATIVAS
+========================================== */
+
+function createOptions() {
+
+    const container =
+        document.getElementById(
+            'optionsContainer'
+        );
+
+    container.innerHTML = "";
+
+
+    const currentSong =
+        guessSongs[currentGuessIndex];
+
+
+    /*
+      Pega 3 músicas diferentes
+      para criar alternativas falsas.
+    */
+
+    let otherSongs =
+        guessSongs.filter(
+            (_, index) =>
+                index !== currentGuessIndex
+        );
+
+
+    /*
+      Embaralha as músicas
+    */
+
+    otherSongs =
+        otherSongs.sort(
+            () => Math.random() - 0.5
+        );
+
+
+    /*
+      Junta a resposta correta
+      com 3 respostas falsas.
+    */
+
+    let options = [
+
+        currentSong.display,
+
+        otherSongs[0].display,
+
+        otherSongs[1].display,
+
+        otherSongs[2].display
+
+    ];
+
+
+    /*
+      Embaralha novamente
+      para a resposta correta
+      não ficar sempre na mesma posição.
+    */
+
+    options =
+        options.sort(
+            () => Math.random() - 0.5
+        );
+
+
+    options.forEach(option => {
+
+        const button =
+            document.createElement(
+                'button'
+            );
+
+
+        button.className =
+            'option-btn';
+
+
+        button.innerHTML = `
+            <i class="fa-solid fa-music"></i>
+            ${option}
+        `;
+
+
+        button.onclick =
+            () => selectOption(
+                option,
+                button
+            );
+
+
+        container.appendChild(
+            button
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   ESCOLHER ALTERNATIVA
+========================================== */
+
+function selectOption(
+    selected,
+    button
+) {
+
+    const currentSong =
+        guessSongs[currentGuessIndex];
+
+
+    const buttons =
+        document.querySelectorAll(
+            '.option-btn'
+        );
+
+
+    buttons.forEach(btn => {
+        btn.disabled = true;
+    });
+
+
+    if (
+        selected.toLowerCase() ===
+        currentSong.display.toLowerCase()
+    ) {
+
+        button.classList.add(
+            'correct'
+        );
+
+
+        document.getElementById(
+            'guessFeedback'
+        ).innerHTML = `
+
+            <span style="color: var(--success)">
+                🎉 Acertou! Era
+                "${currentSong.display}"!
+                (+${roundPoints} pts)
+            </span>
+
+        `;
+
+
+        setTimeout(() => {
+
+            currentGuessIndex++;
+
+            loadGuessRound();
+
+        }, 1800);
+
+    }
+
+    else {
+
+        button.classList.add(
+            'wrong'
+        );
+
+
+        /*
+          Mostra qual era a correta,
+          mas permite continuar.
+        */
+
+        document.getElementById(
+            'guessFeedback'
+        ).innerHTML = `
+
+            <span style="color: var(--error)">
+                ❌ Essa não é a resposta.
+                Tente novamente!
+            </span>
+
+        `;
+
+
+        setTimeout(() => {
+
+            buttons.forEach(btn => {
+
+                btn.disabled = false;
+
+            });
+
+            button.classList.remove(
+                'wrong'
+            );
+
+        }, 1000);
+
+    }
+
+}
+
+
+/* ==========================================
+   REVELAR DICAS
+========================================== */
+
+function revealClue(clueNumber) {
+
+    const song =
+        guessSongs[currentGuessIndex];
+
+
+    if (clueNumber === 2) {
+
+        document.getElementById(
+            'clue2Box'
+        ).classList.add(
+            'revealed'
+        );
+
+
+        document.getElementById(
+            'clue2Text'
+        ).innerText =
+            song.emojis;
+
+
+        document.getElementById(
+            'btnReveal2'
+        ).style.display =
+            "none";
+
+
+        roundPoints -= 50;
+
+    }
+
+
+    else if (clueNumber === 3) {
+
+        document.getElementById(
+            'clue3Box'
+        ).classList.add(
+            'revealed'
+        );
+
+
+        document.getElementById(
+            'clue3Text'
+        ).innerText =
+            `Artista/Banda: ${song.artist}`;
+
+
+        document.getElementById(
+            'btnReveal3'
+        ).style.display =
+            "none";
+
+
+        roundPoints -= 100;
+
+    }
+
+
+    if (roundPoints < 50) {
+
+        roundPoints = 50;
+
+    }
+
+
+    document.getElementById(
+        'guessRoundPoints'
+    ).innerText =
+        `${roundPoints} pts`;
+
+}
+
+
+/* ==========================================
+   ADIVINHAR PELO INPUT
+========================================== */
+
+function submitGuess() {
+
+    const val =
+        document.getElementById(
+            'guessInput'
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const currentSong =
+        guessSongs[currentGuessIndex];
+
+
+    if (!val) {
+
+        document.getElementById(
+            'guessFeedback'
+        ).innerHTML = `
+
+            <span style="color: #f59e0b">
+                ⚠️ Digite uma resposta.
+            </span>
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+      Permite acertar mesmo que o usuário
+      escreva apenas uma parte do nome.
+    */
+
+    if (
+        currentSong.title.includes(val) ||
+        val.includes(
+            currentSong.title.split(' ')[0]
+        )
+    ) {
+
+        document.getElementById(
+            'guessFeedback'
+        ).innerHTML = `
+
+            <span style="color: var(--success)">
+                🎉 Acertou! Era
+                "${currentSong.display}"!
+                (+${roundPoints} pts)
+            </span>
+
+        `;
+
+
+        disableOptions();
+
+
+        setTimeout(() => {
+
+            currentGuessIndex++;
+
+            loadGuessRound();
+
+        }, 1800);
+
+    }
+
+    else {
+
+        document.getElementById(
+            'guessFeedback'
+        ).innerHTML = `
+
+            <span style="color: var(--error)">
+                ❌ Ainda não!
+                Tente novamente ou escolha uma alternativa.
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   DESABILITAR ALTERNATIVAS
+========================================== */
+
+function disableOptions() {
+
+    const buttons =
+        document.querySelectorAll(
+            '.option-btn'
+        );
+
+
+    buttons.forEach(btn => {
+
+        btn.disabled = true;
+
+    });
+
+}
+
+
+/* ==========================================
+   ENTER
+========================================== */
+
+function checkEnterGuess(e) {
+
+    if (e.key === 'Enter') {
+
+        submitGuess();
+
+    }
+
+}
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+initGuessGame();
+
+</script>
+
+</body>
+
+</html>

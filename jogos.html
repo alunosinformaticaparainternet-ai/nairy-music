@@ -1,0 +1,2546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jogos | NAIRY MUSIC</title>
+
+    <meta
+        name="description"
+        content="NAIRY MUSIC - Jogos musicais interativos para testar seus conhecimentos."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+        /* ==========================================
+           RESET E ESTILOS GLOBAIS BÁSICOS
+        =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0b0714;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ==========================================
+           FUNDO / EFEITOS
+        =========================================== */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+        }
+
+        .glow-one {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #8b5cf6;
+        }
+
+        .glow-two {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: #6366f1;
+        }
+
+        .glow-three {
+            top: 40%;
+            left: 30%;
+            width: 40vw;
+            height: 40vw;
+            background: #a855f7;
+        }
+
+        /* ==========================================
+           HEADER
+        =========================================== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 5%;
+            background: rgba(11, 7, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #a1a1aa;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #a855f7;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .icon-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 1rem 0.3rem 0.3rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================
+           MENU MOBILE
+        =========================================== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
+            background: #0f0a1a;
+            z-index: 2000;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s ease;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .mobile-menu-header button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-link {
+            text-decoration: none;
+            color: #a1a1aa;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .mobile-link:hover {
+            color: #a855f7;
+        }
+
+        /* ==========================================
+           SEÇÕES E HERO
+        =========================================== */
+        .section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #a855f7;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #a855f7;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(168, 85, 247, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            color: #a855f7;
+            display: block;
+        }
+
+        .hero-content p {
+            color: #a1a1aa;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: background 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .hero-stat span {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        /* CARD HERO DE DESTAQUE */
+        .hero-player-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .album-glow {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: #8b5cf6;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .album-cover {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .hero-player-info {
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .small-label {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #a855f7;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-player-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-player-info p {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+        }
+
+        .hero-wave {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            height: 30px;
+            margin-bottom: 1.5rem;
+            z-index: 1;
+        }
+
+        .hero-wave span {
+            width: 4px;
+            height: 100%;
+            background: #8b5cf6;
+            border-radius: 2px;
+            animation: wave 1.2s infinite ease-in-out;
+        }
+
+        .hero-wave span:nth-child(2) { animation-delay: 0.1s; }
+        .hero-wave span:nth-child(3) { animation-delay: 0.2s; }
+        .hero-wave span:nth-child(4) { animation-delay: 0.3s; }
+        .hero-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
+        }
+
+        .hero-controls {
+            display: flex;
+            gap: 1rem;
+            z-index: 1;
+        }
+
+        .hero-controls button {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .hero-controls button.hero-play {
+            background: #8b5cf6;
+            border: none;
+        }
+
+        .hero-controls button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ==========================================
+           GRID E CARDS DE JOGOS (ORGANIZADO E DINÂMICO)
+        =========================================== */
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header.centered {
+            text-align: center;
+        }
+
+        .section-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #a855f7;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header h2 span {
+            color: #a855f7;
+        }
+
+        .section-header p {
+            color: #a1a1aa;
+            font-size: 1.05rem;
+        }
+
+        /* Grid responsivo perfeitamente alinhado */
+        .game-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Card com estilo moderno (Glassmorphism e alinhamento correto) */
+        .game-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .game-card.featured-game {
+            border-color: rgba(138, 43, 226, 0.4);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(138, 43, 226, 0.6);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.2);
+        }
+
+        .game-card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(138, 43, 226, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #a855f7;
+            margin-bottom: 1.2rem;
+            transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+        }
+
+        .game-card:hover .game-card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: #8b5cf6;
+            color: #ffffff;
+        }
+
+        .game-level {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #a855f7;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .game-card h3 {
+            font-size: 1.35rem;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .game-card p {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+            flex-grow: 1;
+        }
+
+        .game-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .game-card-footer span {
+            font-size: 0.85rem;
+            color: #d4d4d8;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .game-card-footer span i {
+            color: #eab308;
+        }
+
+        .game-card .primary-button.small,
+        .game-card .secondary-button.small {
+            padding: 0.5rem 1.1rem;
+            font-size: 0.85rem;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: gap 0.3s ease, transform 0.2s ease;
+        }
+
+        .game-card:hover .primary-button.small i,
+        .game-card:hover .secondary-button.small i {
+            transform: translateX(4px);
+        }
+
+        /* ==========================================
+           CONQUISTAS E RANKING
+        =========================================== */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #a855f7;
+            flex-shrink: 0;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .achievement-card p {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+        }
+
+        .achievement-status {
+            margin-left: auto;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #a855f7;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .ranking-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 1.5rem;
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-position {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #a855f7;
+            width: 30px;
+        }
+
+        .ranking-avatar {
+            width: 40px;
+            height: 40px;
+            background: #272138;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .ranking-info {
+            flex-grow: 1;
+        }
+
+        .ranking-info strong {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .ranking-info span {
+            color: #a1a1aa;
+            font-size: 0.85rem;
+        }
+
+        .ranking-points {
+            font-weight: 700;
+            color: #eab308;
+        }
+
+        .ranking-item.current-player {
+            background: rgba(139, 92, 246, 0.08);
+            margin: 0 -2rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            border-radius: 12px;
+            border-bottom: none;
+        }
+
+        /* DESAFIO RÁPIDO */
+        .recommendation-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .recommendation-icon {
+            width: 60px;
+            height: 60px;
+            background: #8b5cf6;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #ffffff;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .recommendation-box div span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #a855f7;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .recommendation-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .recommendation-box p {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+        }
+
+        .recommendation-box .primary-button {
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* ==========================================
+           FOOTER
+        =========================================== */
+        .footer {
+            background: #07040d;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-brand p {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            max-width: 300px;
+        }
+
+        .footer-links h4, .footer-social h4 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #ffffff;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #a1a1aa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+
+        .footer-social div {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: #8b5cf6;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            color: #71717a;
+            font-size: 0.85rem;
+        }
+
+        /* ==========================================
+           MODAL E TOAST
+        =========================================== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #140d24;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            color: #a1a1aa;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .modal-avatar {
+            width: 70px;
+            height: 70px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-content p {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-stat-grid strong {
+            display: block;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .profile-stat-grid span {
+            color: #a1a1aa;
+            font-size: 0.75rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #140d24;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 4000;
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        .toast i {
+            color: #22c55e;
+            font-size: 1.2rem;
+        }
+
+        /* RESPONSIVIDADE */
+        @media(max-width: 968px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 2rem;
+            }
+            .hero-content p {
+                margin: 0 auto 2rem;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .main-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .footer-main {
+                grid-template-columns: 1fr 1fr;
+            }
+            .recommendation-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            .recommendation-box .primary-button {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================
+         FUNDO / EFEITOS
+    =========================================== -->
+
+    <div class="background-effects">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="header">
+
+        <div class="logo-area">
+
+            <button
+                class="mobile-menu-btn"
+                id="mobileMenuBtn"
+                aria-label="Abrir menu"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="logo">
+
+                <span class="logo-icon">
+                    <i class="fa-solid fa-headphones"></i>
+                </span>
+
+                <span>NAIRY</span>
+
+            </a>
+
+        </div>
+
+
+        <nav class="main-nav" id="mainNav">
+
+            <a href="index.html" class="nav-link">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </a>
+
+            <a href="index.html#music" class="nav-link">
+                <i class="fa-solid fa-music"></i>
+                Music
+            </a>
+
+            <a href="index.html#discover" class="nav-link">
+                <i class="fa-solid fa-compass"></i>
+                Descobrir
+            </a>
+
+            <a href="jogos.html" class="nav-link active">
+                <i class="fa-solid fa-gamepad"></i>
+                Jogos
+            </a>
+
+            <a href="index.html#about" class="nav-link">
+                <i class="fa-solid fa-user"></i>
+                About Me
+            </a>
+
+            <a href="index.html#contact" class="nav-link">
+                <i class="fa-solid fa-envelope"></i>
+                Contact
+            </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            <button
+                class="icon-button"
+                id="themeBtn"
+                title="Alterar tema"
+                aria-label="Alterar tema"
+            >
+                <i class="fa-solid fa-moon"></i>
+            </button>
+
+            <button
+                class="icon-button"
+                id="favoritesBtn"
+                title="Favoritos"
+                aria-label="Favoritos"
+            >
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <button
+                class="profile-button"
+                id="profileBtn"
+            >
+
+                <span class="profile-avatar">
+                    N
+                </span>
+
+                <span class="profile-name">
+                    Nairy
+                </span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         MENU MOBILE
+    =========================================== -->
+
+    <div class="mobile-menu" id="mobileMenu">
+
+        <div class="mobile-menu-header">
+
+            <span class="logo">
+
+                <span class="logo-icon">
+                    <i class="fa-solid fa-headphones"></i>
+                </span>
+
+                NAIRY
+
+            </span>
+
+            <button
+                id="closeMobileMenu"
+                aria-label="Fechar menu"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <a href="index.html" class="mobile-link">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+
+
+        <a href="index.html#music" class="mobile-link">
+            <i class="fa-solid fa-music"></i>
+            Music
+        </a>
+
+
+        <a href="index.html#discover" class="mobile-link">
+            <i class="fa-solid fa-compass"></i>
+            Descobrir
+        </a>
+
+
+        <a href="jogos.html" class="mobile-link">
+            <i class="fa-solid fa-gamepad"></i>
+            Jogos
+        </a>
+
+
+        <a href="index.html#about" class="mobile-link">
+            <i class="fa-solid fa-user"></i>
+            About Me
+        </a>
+
+
+        <a href="index.html#contact" class="mobile-link">
+            <i class="fa-solid fa-envelope"></i>
+            Contact
+        </a>
+
+    </div>
+
+
+    <!-- ==========================================
+         CONTEÚDO
+    =========================================== -->
+
+    <main>
+
+
+        <!-- ======================================
+             HERO DOS JOGOS
+        ======================================= -->
+
+        <section class="section hero-section games-hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+
+                    <span class="pulse"></span>
+
+                    CENTRAL DE JOGOS
+
+                </div>
+
+
+                <h1>
+
+                    Música também pode ser
+
+                    <span>uma grande diversão.</span>
+
+                </h1>
+
+
+                <p>
+
+                    Teste seus conhecimentos, descubra novos desafios
+                    e mostre o quanto você realmente conhece o universo
+                    da música.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="primary-button"
+                        onclick="scrollToGames()"
+                    >
+
+                        <i class="fa-solid fa-gamepad"></i>
+
+                        Jogar agora
+
+                    </button>
+
+
+                    <button
+                        class="secondary-button"
+                        onclick="scrollToRanking()"
+                    >
+
+                        <i class="fa-solid fa-trophy"></i>
+
+                        Ver pontuação
+
+                    </button>
+
+                </div>
+
+
+                <div class="hero-stats">
+
+                    <div class="hero-stat">
+
+                        <strong>
+                            6
+                        </strong>
+
+                        <span>
+                            Jogos
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong id="totalPoints">
+                            0
+                        </strong>
+
+                        <span>
+                            Pontos
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong id="gamesPlayed">
+                            0
+                        </strong>
+
+                        <span>
+                            Partidas
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD PRINCIPAL -->
+
+            <div class="hero-player-card game-feature-card">
+
+                <div class="album-glow"></div>
+
+
+                <div class="album-cover large-cover">
+
+                    <i class="fa-solid fa-trophy"></i>
+
+                </div>
+
+
+                <div class="hero-player-info">
+
+                    <span class="small-label">
+                        DESAFIO EM DESTAQUE
+                    </span>
+
+                    <h3>
+                        Quiz Musical
+                    </h3>
+
+                    <p>
+                        Teste seus conhecimentos
+                    </p>
+
+                </div>
+
+
+                <div class="hero-wave">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <div class="hero-controls">
+
+                    <button onclick="openGame('quiz.html')">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+
+                    <button
+                        class="hero-play"
+                        onclick="openGame('quiz.html')"
+                    >
+                        <i class="fa-solid fa-gamepad"></i>
+                    </button>
+
+                    <button onclick="scrollToGames()">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             JOGOS DISPONÍVEIS
+        ======================================= -->
+
+        <section
+            class="section"
+            id="games"
+        >
+
+            <div class="section-header centered">
+
+                <span class="section-tag">
+                    ESCOLHA SEU DESAFIO
+                </span>
+
+
+                <h2>
+
+                    Qual jogo você quer
+
+                    <span>jogar?</span>
+
+                </h2>
+
+
+                <p>
+
+                    Escolha um desafio e comece a testar
+                    seus conhecimentos musicais.
+
+                </p>
+
+            </div>
+
+
+            <!-- GRID DOS JOGOS -->
+
+            <div class="game-cards-grid">
+
+
+                <!-- ==================================
+                     QUIZ MUSICAL
+                =================================== -->
+
+                <div class="game-card featured-game">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        FÁCIL • MÉDIO • DIFÍCIL
+                    </span>
+
+
+                    <h3>
+                        Quiz Musical
+                    </h3>
+
+
+                    <p>
+
+                        Responda perguntas sobre artistas,
+                        instrumentos, gêneros e músicas.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-star"></i>
+
+                            Até 800 pontos
+
+                        </span>
+
+
+                        <button
+                            class="primary-button small"
+                            onclick="openGame('quiz.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     ADIVINHE A MÚSICA
+                =================================== -->
+
+                <div class="game-card">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        DESAFIO
+                    </span>
+
+
+                    <h3>
+                        Adivinhe a Música
+                    </h3>
+
+
+                    <p>
+
+                        Observe as pistas e tente descobrir
+                        qual música está sendo apresentada.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-star"></i>
+
+                            Até 600 pontos
+
+                        </span>
+
+
+                        <button
+                            class="secondary-button small"
+                            onclick="openGame('advinha-musica.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     QUEM É O ARTISTA
+                =================================== -->
+
+                <div class="game-card">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        CONHECIMENTO
+                    </span>
+
+
+                    <h3>
+                        Quem é o Artista?
+                    </h3>
+
+
+                    <p>
+
+                        Descubra o artista através de
+                        pistas sobre sua carreira musical.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-star"></i>
+
+                            Até 480 pontos
+
+                        </span>
+
+
+                        <button
+                            class="secondary-button small"
+                            onclick="openGame('artista.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     INSTRUMENTO
+                =================================== -->
+
+                <div class="game-card">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-guitar"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        INSTRUMENTOS
+                    </span>
+
+
+                    <h3>
+                        Qual é o Instrumento?
+                    </h3>
+
+
+                    <p>
+
+                        Leia a descrição e descubra
+                        qual instrumento está escondido.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-star"></i>
+
+                            Até 400 pontos
+
+                        </span>
+
+
+                        <button
+                            class="secondary-button small"
+                            onclick="openGame('instrumento.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     GÊNERO
+                =================================== -->
+
+                <div class="game-card">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-compact-disc"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        DESAFIO MUSICAL
+                    </span>
+
+
+                    <h3>
+                        Descubra o Gênero
+                    </h3>
+
+
+                    <p>
+
+                        Analise as características e
+                        descubra o gênero musical correto.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-star"></i>
+
+                            Até 400 pontos
+
+                        </span>
+
+
+                        <button
+                            class="secondary-button small"
+                            onclick="openGame('genero.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================
+                     BATALHA MUSICAL
+                =================================== -->
+
+                <div class="game-card">
+
+                    <div class="game-card-icon">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+
+                    <span class="game-level">
+                        MODO RÁPIDO
+                    </span>
+
+
+                    <h3>
+                        Batalha Musical
+                    </h3>
+
+
+                    <p>
+
+                        Responda o máximo de perguntas
+                        que conseguir antes do tempo acabar.
+
+                    </p>
+
+
+                    <div class="game-card-footer">
+
+                        <span>
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            60 segundos
+
+                        </span>
+
+
+                        <button
+                            class="secondary-button small"
+                            onclick="openGame('batalha.html')"
+                        >
+
+                            Jogar
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             CONQUISTAS
+        ======================================= -->
+
+        <section class="section">
+
+            <div class="section-header centered">
+
+                <span class="section-tag">
+                    CONQUISTAS
+                </span>
+
+
+                <h2>
+
+                    Mostre que você
+
+                    <span>é fã de música.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Complete desafios para desbloquear
+                    suas conquistas musicais.
+
+                </p>
+
+            </div>
+
+
+            <div class="achievements-grid">
+
+
+                <div class="achievement-card">
+
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Primeiro desafio
+                        </h3>
+
+                        <p>
+                            Complete seu primeiro jogo.
+                        </p>
+
+                    </div>
+
+                    <span class="achievement-status">
+                        EM BREVE
+                    </span>
+
+                </div>
+
+
+                <div class="achievement-card">
+
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Conhecedor
+                        </h3>
+
+                        <p>
+                            Alcance 500 pontos.
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="achievement-status"
+                        id="achievementPoints"
+                    >
+                        0 / 500
+                    </span>
+
+                </div>
+
+
+                <div class="achievement-card">
+
+                    <div class="achievement-icon">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Mestre Musical
+                        </h3>
+
+                        <p>
+                            Vença 10 desafios.
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="achievement-status"
+                        id="achievementGames"
+                    >
+                        0 / 10
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             RANKING
+        ======================================= -->
+
+        <section
+            class="section"
+            id="ranking"
+        >
+
+            <div class="section-header centered">
+
+                <span class="section-tag">
+                    RANKING
+                </span>
+
+
+                <h2>
+
+                    Quem entende mais de
+
+                    <span>música?</span>
+
+                </h2>
+
+
+                <p>
+
+                    Veja os melhores jogadores
+                    da comunidade NAIRY.
+
+                </p>
+
+            </div>
+
+
+            <div class="ranking-card">
+
+
+                <div class="ranking-item">
+
+                    <div class="ranking-position">
+                        01
+                    </div>
+
+
+                    <div class="ranking-avatar">
+                        L
+                    </div>
+
+
+                    <div class="ranking-info">
+
+                        <strong>
+                            Lara
+                        </strong>
+
+                        <span>
+                            Mestre Musical
+                        </span>
+
+                    </div>
+
+
+                    <div class="ranking-points">
+                        2.850 pts
+                    </div>
+
+                </div>
+
+
+                <div class="ranking-item">
+
+                    <div class="ranking-position">
+                        02
+                    </div>
+
+
+                    <div class="ranking-avatar">
+                        C
+                    </div>
+
+
+                    <div class="ranking-info">
+
+                        <strong>
+                            Carlos
+                        </strong>
+
+                        <span>
+                            Conhecedor
+                        </span>
+
+                    </div>
+
+
+                    <div class="ranking-points">
+                        2.430 pts
+                    </div>
+
+                </div>
+
+
+                <div class="ranking-item">
+
+                    <div class="ranking-position">
+                        03
+                    </div>
+
+
+                    <div class="ranking-avatar">
+                        A
+                    </div>
+
+
+                    <div class="ranking-info">
+
+                        <strong>
+                            Ana
+                        </strong>
+
+                        <span>
+                            Exploradora
+                        </span>
+
+                    </div>
+
+
+                    <div class="ranking-points">
+                        1.980 pts
+                    </div>
+
+                </div>
+
+
+                <div class="ranking-item current-player">
+
+                    <div class="ranking-position">
+                        04
+                    </div>
+
+
+                    <div class="ranking-avatar">
+                        N
+                    </div>
+
+
+                    <div class="ranking-info">
+
+                        <strong>
+                            Nairy
+                        </strong>
+
+                        <span>
+                            Você
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="ranking-points"
+                        id="rankingPoints"
+                    >
+                        0 pts
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             DESAFIO RÁPIDO
+        ======================================= -->
+
+        <section class="section quick-challenge">
+
+            <div class="recommendation-box">
+
+                <div class="recommendation-icon">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        DESAFIO RÁPIDO
+                    </span>
+
+
+                    <h3>
+                        Tem apenas alguns minutos?
+                    </h3>
+
+
+                    <p>
+                        Faça um desafio rápido e tente
+                        aumentar sua pontuação.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-button small"
+                    onclick="openGame('batalha.html')"
+                >
+
+                    Jogar agora
+
+                    <i class="fa-solid fa-play"></i>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-main">
+
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="logo">
+
+                    <span class="logo-icon">
+                        <i class="fa-solid fa-headphones"></i>
+                    </span>
+
+                    NAIRY
+
+                </a>
+
+
+                <p>
+
+                    Música, descoberta e interação
+                    em um só lugar.
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Navegação
+                </h4>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="index.html#music">
+                    Music
+                </a>
+
+                <a href="index.html#discover">
+                    Descobrir
+                </a>
+
+                <a href="jogos.html">
+                    Jogos
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Projeto
+                </h4>
+
+                <a href="index.html#about">
+                    Sobre
+                </a>
+
+                <a href="index.html#contact">
+                    Contato
+                </a>
+
+                <a href="#">
+                    Privacidade
+                </a>
+
+                <a href="#">
+                    Termos
+                </a>
+
+            </div>
+
+
+            <div class="footer-social">
+
+                <h4>
+                    Redes sociais
+                </h4>
+
+
+                <div>
+
+                    <a href="#" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#" title="TikTok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="#" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                    <a href="#" title="Spotify">
+                        <i class="fa-brands fa-spotify"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 NAIRY MUSIC.
+                Todos os direitos reservados.
+            </span>
+
+
+            <span>
+                Feito para quem ama música.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ==========================================
+         MODAL PERFIL
+    =========================================== -->
+
+    <div
+        class="modal"
+        id="profileModal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                class="modal-close"
+                data-close="profileModal"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+
+            <div class="modal-avatar">
+                N
+            </div>
+
+
+            <h2>
+                Nairy
+            </h2>
+
+
+            <p>
+                Explorador musical
+            </p>
+
+
+            <div class="profile-stat-grid">
+
+                <div>
+
+                    <strong id="modalPoints">
+                        0
+                    </strong>
+
+                    <span>
+                        Pontos
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="modalGames">
+                        0
+                    </strong>
+
+                    <span>
+                        Jogos
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong id="modalAchievements">
+                        0
+                    </strong>
+
+                    <span>
+                        Conquistas
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                data-close="profileModal"
+            >
+
+                Fechar
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         TOAST
+    =========================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span id="toastMessage">
+            Ação realizada!
+        </span>
+
+    </div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+        /* ==========================================
+           ESTATÍSTICAS & LOCAL STORAGE
+        =========================================== */
+
+        let totalPoints = Number(localStorage.getItem("nairy_total_points")) || 0;
+        let gamesPlayed = Number(localStorage.getItem("nairy_games_played")) || 0;
+
+        function updateStats() {
+            const totalPointsElement = document.getElementById("totalPoints");
+            const gamesPlayedElement = document.getElementById("gamesPlayed");
+            const rankingPoints = document.getElementById("rankingPoints");
+            const modalPoints = document.getElementById("modalPoints");
+            const modalGames = document.getElementById("modalGames");
+            const achievementPoints = document.getElementById("achievementPoints");
+            const achievementGames = document.getElementById("achievementGames");
+
+            if (totalPointsElement) totalPointsElement.textContent = totalPoints;
+            if (gamesPlayedElement) gamesPlayedElement.textContent = gamesPlayed;
+            if (rankingPoints) rankingPoints.textContent = `${totalPoints} pts`;
+            if (modalPoints) modalPoints.textContent = totalPoints;
+            if (modalGames) modalGames.textContent = gamesPlayed;
+
+            if (achievementPoints) {
+                achievementPoints.textContent = `${Math.min(totalPoints, 500)} / 500`;
+            }
+
+            if (achievementGames) {
+                achievementGames.textContent = `${Math.min(gamesPlayed, 10)} / 10`;
+            }
+        }
+
+        /* ==========================================
+           NAVEGAÇÃO E ABERTURA DE JOGOS
+        =========================================== */
+
+        function openGame(pageUrl) {
+            window.location.href = pageUrl;
+        }
+
+        function scrollToGames() {
+            const gamesSection = document.getElementById("games");
+            if (gamesSection) {
+                gamesSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        function scrollToRanking() {
+            const rankingSection = document.getElementById("ranking");
+            if (rankingSection) {
+                rankingSection.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        /* ==========================================
+           MODAL E TOASTS
+        =========================================== */
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const toastMessage = document.getElementById("toastMessage");
+            if (toast && toastMessage) {
+                toastMessage.textContent = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+        }
+
+        const profileBtn = document.getElementById("profileBtn");
+        const profileModal = document.getElementById("profileModal");
+
+        if (profileBtn && profileModal) {
+            profileBtn.addEventListener("click", () => {
+                profileModal.classList.add("active");
+            });
+        }
+
+        document.querySelectorAll("[data-close]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const modalId = btn.getAttribute("data-close");
+                const modal = document.getElementById(modalId);
+                if (modal) modal.classList.remove("active");
+            });
+        });
+
+        /* ==========================================
+           MENU MOBILE & TEMA
+        =========================================== */
+
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const closeMobileMenu = document.getElementById("closeMobileMenu");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener("click", () => {
+                mobileMenu.classList.add("active");
+            });
+        }
+
+        if (closeMobileMenu && mobileMenu) {
+            closeMobileMenu.addEventListener("click", () => {
+                mobileMenu.classList.remove("active");
+            });
+        }
+
+        const themeBtn = document.getElementById("themeBtn");
+        if (themeBtn) {
+            themeBtn.addEventListener("click", () => {
+                document.body.classList.toggle("light-theme");
+                const isLight = document.body.classList.contains("light-theme");
+                themeBtn.innerHTML = isLight ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+                showToast(isLight ? "Tema claro ativado!" : "Tema escuro ativado!");
+            });
+        }
+
+        const favoritesBtn = document.getElementById("favoritesBtn");
+        if (favoritesBtn) {
+            favoritesBtn.addEventListener("click", () => {
+                showToast("Página de Favoritos em breve!");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateStats();
+        });
+
+    </script>
+</body>
+
+</html>

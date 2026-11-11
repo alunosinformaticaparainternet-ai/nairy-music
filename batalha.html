@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dinâmica: Relâmpago Musical | NAIRY MUSIC</title>
+
+    <meta
+        name="description"
+        content="Responda o máximo de perguntas sobre música que conseguir antes do tempo acabar na NAIRY MUSIC."
+    >
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS Unificado -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #0b0714;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+        }
+
+        .glow-one { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #8b5cf6; }
+        .glow-two { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #6366f1; }
+        .glow-three { top: 40%; left: 30%; width: 40vw; height: 40vw; background: #a855f7; }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 5%;
+            background: rgba(11, 7, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 1rem; }
+        .logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            text-decoration: none; color: #ffffff; font-weight: 800; font-size: 1.2rem;
+        }
+        .logo-icon {
+            width: 35px; height: 35px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 1rem; }
+        .icon-button {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            text-decoration: none;
+        }
+
+        .section { padding: 4rem 5%; max-width: 900px; margin: 0 auto; }
+        
+        .card-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff; border: none; padding: 0.9rem 2rem;
+            border-radius: 12px; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .primary-button:hover { transform: translateY(-2px); }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; padding: 0.9rem 2rem; border-radius: 12px;
+            font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .name-input-group {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .name-input-group input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            outline: none;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Estilo da Dinâmica de Tempo */
+        .game-top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1rem;
+            text-align: left;
+        }
+
+        .timer-badge {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .question-card {
+            margin: 1.5rem 0;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 1.8rem;
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media(max-width: 650px) {
+            .answers-grid { grid-template-columns: 1fr; }
+        }
+
+        .answer-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .answer-btn:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-stats strong {
+            display: block; font-size: 1.4rem; color: #a855f7;
+        }
+        .result-stats span { font-size: 0.8rem; color: #a1a1aa; }
+
+        .footer {
+            background: #07040d; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 5% 1.5rem; margin-top: 4rem; text-align: center; color: #71717a; font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-effects">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo-area">
+            <a href="jogos.html" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-headphones"></i></span>
+                <span>NAIRY MUSIC</span>
+            </a>
+        </div>
+        <div class="header-actions">
+            <a href="jogos.html" class="icon-button" title="Voltar aos Jogos"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    </header>
+
+    <main class="section">
+
+        <!-- TELA 1: CADASTRO DO NOME -->
+        <div class="card-box" id="nameScreen">
+            <div style="font-size: 2.5rem; color: #ef4444; margin-bottom: 1rem;">
+                <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 0.5rem;">Relâmpago Musical</h1>
+            <p style="color: #a1a1aa; margin-bottom: 1.5rem;">Você tem <b>60 segundos</b> para responder o máximo de perguntas musicais que conseguir. Cada acerto vale 100 pontos!</p>
+            
+            <div class="name-input-group">
+                <label for="playerName" style="font-size: 0.9rem; color: #d4d4d8;">Digite seu nome para iniciar:</label>
+                <input type="text" id="playerName" placeholder="Seu nome..." autocomplete="off">
+            </div>
+
+            <button class="primary-button" onclick="startGame()">
+                <i class="fa-solid fa-play"></i> Começar Agora
+            </button>
+        </div>
+
+        <!-- TELA 2: ÁREA DA DINÂMICA COM CRONÔMETRO -->
+        <div class="card-box hidden" id="gameScreen">
+            <div class="game-top-info">
+                <div class="timer-badge">
+                    <i class="fa-solid fa-clock"></i> <span id="timeLeft">60</span>s
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.75rem; color: #a1a1aa; display: block;">PONTUAÇÃO ATUAL</span>
+                    <strong id="liveScore" style="font-size: 1.4rem; color: #eab308;">0 pts</strong>
+                </div>
+            </div>
+
+            <!-- CAIXA DA PERGUNTA -->
+            <div class="question-card">
+                <p style="font-size: 0.75rem; color: #8b5cf6; margin-bottom: 0.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                    Responda Rápido!
+                </p>
+                <p class="question-text" id="questionText">Carregando...</p>
+            </div>
+
+            <!-- OPÇÕES DE RESPOSTA -->
+            <div class="answers-grid" id="answersGrid"></div>
+        </div>
+
+        <!-- TELA 3: RESULTADO FINAL -->
+        <div class="card-box hidden" id="resultScreen">
+            <div style="font-size: 3rem; color: #eab308; margin-bottom: 0.8rem;">
+                <i class="fa-solid fa-hourglass-end"></i>
+            </div>
+            <span style="font-size: 0.8rem; font-weight: 700; color: #a855f7; letter-spacing: 1px;">TEMPO ESGOTADO!</span>
+            <h2 id="resultTitle" style="font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0.5rem 0;">Fim de Jogo!</h2>
+            <p id="resultSubtitle" style="color: #a1a1aa; margin-bottom: 1.5rem;"></p>
+            
+            <div style="font-size: 2.2rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;" id="finalScoreDisplay">0 pts</div>
+
+            <div class="result-stats">
+                <div>
+                    <strong id="statAnswered">0</strong>
+                    <span>Respondidas</span>
+                </div>
+                <div>
+                    <strong id="statCorrect">0</strong>
+                    <span>Acertos</span>
+                </div>
+                <div>
+                    <strong id="statWrong">0</strong>
+                    <span>Erros</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <button class="secondary-button" onclick="location.reload()">
+                    <i class="fa-solid fa-rotate-right"></i> Tentar de Novo
+                </button>
+                <a href="jogos.html" class="primary-button">
+                    <i class="fa-solid fa-gamepad"></i> Central de Jogos
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 NAIRY MUSIC. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DA DINÂMICA DE TEMPO -->
+    <script>
+        const questionPool = [
+            { q: "Qual cantor é conhecido como o 'Rei do Pop'?", options: ["Elvis Presley", "Michael Jackson", "Prince", "Freddie Mercury"], correct: 1 },
+            { q: "Qual instrumento possui 88 teclas no total?", options: ["Violão", "Piano", "Harpa", "Acordeon"], correct: 1 },
+            { q: "Em que país nasceu a Bossa Nova?", options: ["Estados Unidos", "Jamaica", "Brasil", "Cuba"], correct: 2 },
+            { q: "Qual banda gravou o famoso álbum 'Abbey Road'?", options: ["The Rolling Stones", "The Beatles", "Pink Floyd", "Led Zeppelin"], correct: 1 },
+            { q: "Qual gênero musical é tradicionalmente tocado com sanfona, zabumba e triângulo?", options: ["Samba", "Forró", "Axé", "Sertanejo Raiz"], correct: 1 },
+            { q: "Quem canta o sucesso mundial 'Shape of You'?", options: ["Justin Bieber", "Shawn Mendes", "Ed Sheeran", "Harry Styles"], correct: 2 },
+            { q: "Qual é o nome da cantora brasileira conhecida como a 'Rainha da Sofrência'?", options: ["Ivete Sangalo", "Marília Mendonça", "Anitta", "Luísa Sonza"], correct: 1 },
+            { q: "Quantas cordas tem um violão acústico tradicional padrão?", options: ["4", "5", "6", "7"], correct: 2 },
+            { q: "Qual estilo musical originou-se na Jamaica na década de 1960?", options: ["Reggae", "Blues", "Jazz", "Salsa"], correct: 0 },
+            { q: "Qual o nome do festival de música gigante que aconteceu em Woodstock em 1969?", options: ["Rock in Rio", "Woodstock", "Coachella", "Glastonbury"], correct: 1 },
+            { q: "Quem foi o vocalista principal da banda Queen?", options: ["David Bowie", "Elton John", "Freddie Mercury", "Mick Jagger"], correct: 2 },
+            { q: "Qual destes instrumentos NÃO pertence à família das cordas?", options: ["Violino", "Flauta", "Violoncelo", "Ukulele"], correct: 1 },
+            { q: "O ritmo funk carioca tem sua origem principal em qual país estrangeiro na sua batida inicial (Miami Bass)?", options: ["Estados Unidos", "Inglaterra", "França", "Jamaica"], correct: 0 },
+            { q: "Qual artista pop é conhecida como 'Queen of Pop'?", options: ["Madonna", "Lady Gaga", "Beyoncé", "Taylor Swift"], correct: 0 }
+        ];
+
+        let playerName = "";
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let totalAnswered = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let currentQuestion = null;
+
+        const nameScreen = document.getElementById("nameScreen");
+        const gameScreen = document.getElementById("gameScreen");
+        const resultScreen = document.getElementById("resultScreen");
+        
+        const playerNameInput = document.getElementById("playerName");
+        const questionText = document.getElementById("questionText");
+        const answersGrid = document.getElementById("answersGrid");
+        const liveScore = document.getElementById("liveScore");
+        const timeDisplay = document.getElementById("timeLeft");
+
+        function startGame() {
+            playerName = playerNameInput.value.trim();
+            if (!playerName) {
+                alert("Por favor, digite seu nome para continuar!");
+                return;
+            }
+
+            nameScreen.classList.add("hidden");
+            gameScreen.classList.remove("hidden");
+            
+            startTimer();
+            loadNextRandomQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timeDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function loadNextRandomQuestion() {
+            if (timeLeft <= 0) return;
+
+            const randomIndex = Math.floor(Math.random() * questionPool.length);
+            currentQuestion = questionPool[randomIndex];
+
+            questionText.textContent = currentQuestion.q;
+            answersGrid.innerHTML = "";
+
+            currentQuestion.options.forEach((optText, index) => {
+                const btn = document.createElement("button");
+                btn.className = "answer-btn";
+                btn.innerHTML = `<span>${optText}</span> <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#8b5cf6;"></i>`;
+                btn.onclick = () => handleAnswer(index);
+                answersGrid.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex) {
+            if (timeLeft <= 0) return;
+
+            totalAnswered++;
+            if (selectedIndex === currentQuestion.correct) {
+                score += 100;
+                correctCount++;
+            } else {
+                wrongCount++;
+            }
+
+            liveScore.textContent = `${score} pts`;
+            loadNextRandomQuestion();
+        }
+
+        function endGame() {
+            gameScreen.classList.add("hidden");
+            resultScreen.classList.remove("hidden");
+
+            document.getElementById("resultTitle").textContent = `Fim do Tempo, ${playerName}!`;
+            document.getElementById("resultSubtitle").textContent = `Você correu contra o relógio e garantiu ótimos pontos!`;
+            document.getElementById("finalScoreDisplay").textContent = `${score} pontos`;
+            
+            document.getElementById("statAnswered").textContent = totalAnswered;
+            document.getElementById("statCorrect").textContent = correctCount;
+            document.getElementById("statWrong").textContent = wrongCount;
+
+            let totalPoints = Number(localStorage.getItem("nairy_total_points")) || 0;
+            let gamesPlayed = Number(localStorage.getItem("nairy_games_played")) || 0;
+            
+            totalPoints += score;
+            gamesPlayed += 1;
+
+            localStorage.setItem("nairy_total_points", totalPoints);
+            localStorage.setItem("nairy_games_played", gamesPlayed);
+        }
+    </script>
+</body>
+</html>

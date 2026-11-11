@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo Musical - Desafio dos 1000 Pontos</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    color: #f5f3ff;
+    background: linear-gradient(135deg, #080b1c, #151044, #080b1c);
+    padding: 25px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.logo {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+header h1 {
+    font-size: 34px;
+    color: #b9a2ff;
+}
+
+header p {
+    color: #c7c6df;
+    margin-top: 10px;
+}
+
+.painel {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.info {
+    flex: 1;
+    text-align: center;
+    background: #171632;
+    border: 1px solid #5144a7;
+    padding: 18px 10px;
+    border-radius: 14px;
+}
+
+.info span {
+    display: block;
+    color: #bcb5e9;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.info strong {
+    font-size: 25px;
+    color: #ffc857;
+}
+
+.barra-fundo {
+    background: #29254c;
+    height: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.barra {
+    background: linear-gradient(90deg, #6e42ff, #dc49ff);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.cartao {
+    background: rgba(18, 17, 45, 0.96);
+    border: 1px solid #5144a7;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 35px #0005;
+}
+
+.categoria {
+    color: #c5a7ff;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+#pergunta {
+    font-size: 25px;
+    line-height: 1.4;
+    margin-bottom: 25px;
+}
+
+.alternativas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.alternativa {
+    background: #211e49;
+    border: 2px solid #5144a7;
+    border-radius: 12px;
+    color: white;
+    padding: 18px 15px;
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+    min-height: 65px;
+}
+
+.alternativa:hover:not(:disabled) {
+    background: #393071;
+    border-color: #b9a2ff;
+    transform: translateY(-2px);
+}
+
+.alternativa:disabled {
+    cursor: default;
+}
+
+.alternativa.correta {
+    background: #07583e;
+    border-color: #22d3a0;
+}
+
+.alternativa.errada {
+    background: #681f37;
+    border-color: #ff6688;
+}
+
+#feedback {
+    margin-top: 22px;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 25px;
+}
+
+#continuar, #reiniciar {
+    background: linear-gradient(90deg, #7145ff, #a347ef);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#continuar:hover, #reiniciar:hover {
+    filter: brightness(1.15);
+}
+
+.escondido {
+    display: none !important;
+}
+
+#resultado {
+    text-align: center;
+}
+
+#resultado h2 {
+    color: #c5a7ff;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.total-final {
+    color: #ffc857;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#mensagem-final {
+    line-height: 1.8;
+    color: #d2cfee;
+}
+
+footer {
+    text-align: center;
+    color: #9995c1;
+    padding: 25px 5px 10px;
+    font-size: 13px;
+}
+
+@media (max-width: 550px) {
+    body {
+        padding: 12px;
+    }
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    .logo {
+        font-size: 38px;
+    }
+
+    .cartao {
+        padding: 20px 15px;
+    }
+
+    #pergunta {
+        font-size: 21px;
+    }
+
+    .alternativas {
+        grid-template-columns: 1fr;
+    }
+
+    .info strong {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <header>
+        <div class="logo">🎧 🎵 🎤</div>
+        <h1>JOGO MUSICAL</h1>
+        <p>Teste seus conhecimentos e conquiste até 5.500 pontos!</p>
+    </header>
+
+    <section class="painel">
+        <div class="info">
+            <span>PERGUNTA</span>
+            <strong id="numero">1/10</strong>
+        </div>
+
+        <div class="info">
+            <span>SUA PONTUAÇÃO</span>
+            <strong id="pontos">0</strong>
+        </div>
+
+        <div class="info">
+            <span>VALE</span>
+            <strong id="valor">100 pts</strong>
+        </div>
+    </section>
+
+    <div class="barra-fundo">
+        <div class="barra" id="barra"></div>
+    </div>
+
+    <main class="cartao" id="jogo">
+        <div class="categoria" id="categoria">🎤 Artistas</div>
+        <h2 id="pergunta">Carregando pergunta...</h2>
+
+        <div class="alternativas" id="alternativas"></div>
+
+        <div id="feedback" aria-live="polite"></div>
+
+        <button id="continuar" class="escondido"
+                onclick="proximaPergunta()">
+            Próxima pergunta →
+        </button>
+    </main>
+
+    <section class="cartao escondido" id="resultado">
+        <div class="logo">🏆</div>
+        <h2>Fim do desafio musical!</h2>
+        <p>Sua pontuação final foi:</p>
+        <div class="total-final" id="total-final">0</div>
+        <p id="mensagem-final"></p>
+        <button id="reiniciar" onclick="reiniciarJogo()">
+            🔄 Jogar novamente
+        </button>
+    </section>
+
+    <footer>
+        Jogo Musical • 10 perguntas • Conhecimento e diversão
+    </footer>
+</div>
+
+<script>
+const perguntas = [
+    {
+        categoria: "🎤 Artistas",
+        pontos: 100,
+        pergunta: "Qual artista brasileiro é conhecido como o Rei da música brasileira?",
+        alternativas: [
+            "Roberto Carlos",
+            "Luan Santana",
+            "Alok",
+            "Michel Teló"
+        ],
+        correta: 0,
+        explicacao: "Roberto Carlos é conhecido popularmente como o Rei."
+    },
+    {
+        categoria: "🎸 Instrumentos",
+        pontos: 200,
+        pergunta: "Qual instrumento musical possui seis cordas e é muito usado no rock?",
+        alternativas: [
+            "Flauta",
+            "Guitarra",
+            "Trompete",
+            "Pandeiro"
+        ],
+        correta: 1,
+        explicacao: "A guitarra é muito presente no rock, pop e outros estilos."
+    },
+    {
+        categoria: "🎶 Gêneros musicais",
+        pontos: 300,
+        pergunta: "Qual gênero musical brasileiro tem como um de seus instrumentos característicos a sanfona?",
+        alternativas: [
+            "Reggae",
+            "Ópera",
+            "Forró",
+            "Blues"
+        ],
+        correta: 2,
+        explicacao: "A sanfona é um instrumento marcante no forró tradicional."
+    },
+    {
+        categoria: "🎵 Músicas",
+        pontos: 400,
+        pergunta: "Quem canta a música 'Evidências', famosa na música sertaneja?",
+        alternativas: [
+            "Jorge & Mateus",
+            "Chitãozinho & Xororó",
+            "Zezé Di Camargo & Luciano",
+            "Bruno & Marrone"
+        ],
+        correta: 1,
+        explicacao: "Evidências ficou especialmente famosa na voz de Chitãozinho & Xororó."
+    },
+    {
+        categoria: "🎤 Artistas",
+        pontos: 500,
+        pergunta: "Qual cantora é conhecida mundialmente pelo sucesso 'Single Ladies'?",
+        alternativas: [
+            "Adele",
+            "Shakira",
+            "Beyoncé",
+            "Rihanna"
+        ],
+        correta: 2,
+        explicacao: "Single Ladies é um dos grandes sucessos de Beyoncé."
+    },
+    {
+        categoria: "🥁 Instrumentos",
+        pontos: 600,
+        pergunta: "Qual instrumento é tocado normalmente com baquetas e ajuda a marcar o ritmo de uma banda?",
+        alternativas: [
+            "Violino",
+            "Bateria",
+            "Clarinete",
+            "Harpa"
+        ],
+        correta: 1,
+        explicacao: "A bateria marca o ritmo e ajuda a manter o tempo musical."
+    },
+    {
+        categoria: "🎶 Gêneros musicais",
+        pontos: 700,
+        pergunta: "O reggae ficou internacionalmente associado a qual artista jamaicano?",
+        alternativas: [
+            "Bob Marley",
+            "Freddie Mercury",
+            "Elvis Presley",
+            "Frank Sinatra"
+        ],
+        correta: 0,
+        explicacao: "Bob Marley foi um dos artistas mais importantes da história do reggae."
+    },
+    {
+        categoria: "🎵 Músicas",
+        pontos: 800,
+        pergunta: "Qual banda britânica lançou a música 'Bohemian Rhapsody'?",
+        alternativas: [
+            "The Beatles",
+            "Coldplay",
+            "Queen",
+            "The Rolling Stones"
+        ],
+        correta: 2,
+        explicacao: "Bohemian Rhapsody é um dos maiores sucessos da banda Queen."
+    },
+    {
+        categoria: "🎤 Artistas",
+        pontos: 900,
+        pergunta: "Qual artista é conhecido pelo álbum 'Thriller' e pelo apelido Rei do Pop?",
+        alternativas: [
+            "Prince",
+            "Michael Jackson",
+            "Justin Timberlake",
+            "Bruno Mars"
+        ],
+        correta: 1,
+        explicacao: "Michael Jackson lançou Thriller, um dos álbuns mais conhecidos da música pop."
+    },
+    {
+        categoria: "🎹 Instrumentos",
+        pontos: 1000,
+        pergunta: "Qual instrumento possui teclas brancas e pretas e pode ser acústico ou digital?",
+        alternativas: [
+            "Saxofone",
+            "Violoncelo",
+            "Piano",
+            "Tambor"
+        ],
+        correta: 2,
+        explicacao: "O piano pode ser acústico ou digital e é muito usado em diversos gêneros."
+    }
+];
+
+let indice = 0;
+let pontuacao = 0;
+let respondida = false;
+let acertos = 0;
+
+function mostrarPergunta() {
+    respondida = false;
+
+    const p = perguntas[indice];
+
+    document.getElementById("numero").textContent =
+        `${indice + 1}/10`;
+
+    document.getElementById("pontos").textContent = pontuacao;
+
+    document.getElementById("valor").textContent =
+        p.pontos + " pts";
+
+    document.getElementById("categoria").textContent =
+        p.categoria;
+
+    document.getElementById("pergunta").textContent =
+        p.pergunta;
+
+    document.getElementById("barra").style.width =
+        (indice / perguntas.length * 100) + "%";
+
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("continuar").classList.add("escondido");
+
+    const area = document.getElementById("alternativas");
+    area.innerHTML = "";
+
+    p.alternativas.forEach((alternativa, i) => {
+        const botao = document.createElement("button");
+        botao.className = "alternativa";
+        botao.textContent =
+            String.fromCharCode(65 + i) + ") " + alternativa;
+
+        botao.onclick = () => verificarResposta(i);
+
+        area.appendChild(botao);
+    });
+}
+
+function verificarResposta(escolha) {
+    if (respondida) return;
+
+    respondida = true;
+
+    const p = perguntas[indice];
+    const botoes = document.querySelectorAll(".alternativa");
+    const feedback = document.getElementById("feedback");
+
+    botoes.forEach((botao, i) => {
+        botao.disabled = true;
+
+        if (i === p.correta) {
+            botao.classList.add("correta");
+        }
+
+        if (i === escolha && escolha !== p.correta) {
+            botao.classList.add("errada");
+        }
+    });
+
+    if (escolha === p.correta) {
+        pontuacao += p.pontos;
+        acertos++;
+
+        feedback.style.color = "#22d3a0";
+        feedback.textContent =
+            `✅ Resposta correta! Você ganhou ${p.pontos} pontos. ${p.explicacao}`;
+    } else {
+        feedback.style.color = "#ff8ba7";
+        feedback.textContent =
+            `❌ Resposta incorreta! ${p.explicacao}`;
+    }
+
+    document.getElementById("pontos").textContent = pontuacao;
+
+    const botaoContinuar = document.getElementById("continuar");
+    botaoContinuar.classList.remove("escondido");
+
+    botaoContinuar.textContent =
+        indice === perguntas.length - 1
+            ? "Ver resultado 🏆"
+            : "Próxima pergunta →";
+}
+
+function proximaPergunta() {
+    if (!respondida) return;
+
+    indice++;
+
+    if (indice < perguntas.length) {
+        mostrarPergunta();
+    } else {
+        mostrarResultado();
+    }
+}
+
+function mostrarResultado() {
+    document.getElementById("jogo").classList.add("escondido");
+    document.querySelector(".painel").classList.add("escondido");
+    document.querySelector(".barra-fundo").classList.add("escondido");
+    document.getElementById("resultado").classList.remove("escondido");
+
+    document.getElementById("total-final").textContent =
+        pontuacao + " pontos";
+
+    let mensagem = "";
+
+    if (acertos === 10) {
+        mensagem = "🌟 Perfeito! Você é um verdadeiro mestre da música!";
+    } else if (acertos >= 7) {
+        mensagem = "🎉 Muito bem! Você conhece bastante sobre música!";
+    } else if (acertos >= 4) {
+        mensagem = "👏 Bom trabalho! Continue explorando o mundo musical!";
+    } else {
+        mensagem = "🎧 Continue praticando! Você pode jogar novamente.";
+    }
+
+    document.getElementById("mensagem-final").innerHTML =
+        `${mensagem}<br>Você acertou ${acertos} de 10 perguntas.`;
+    
+    document.getElementById("barra").style.width = "100%";
+}
+
+function reiniciarJogo() {
+    indice = 0;
+    pontuacao = 0;
+    acertos = 0;
+    respondida = false;
+
+    document.getElementById("resultado").classList.add("escondido");
+    document.getElementById("jogo").classList.remove("escondido");
+    document.querySelector(".painel").classList.remove("escondido");
+    document.querySelector(".barra-fundo").classList.remove("escondido");
+
+    mostrarPergunta();
+}
+
+mostrarPergunta();
+</script>
+</body>
+</html>
